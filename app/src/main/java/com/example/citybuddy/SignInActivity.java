@@ -17,11 +17,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SignInActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
-
     private static final String TAG = "EmailPassword";
+
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,15 +36,14 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     public void logIn(View v){
-
         EditText emailEdit = (EditText) findViewById(R.id.emailEdit);
-        String email = emailEdit.getText().toString();
+        final String email = emailEdit.getText().toString();
 
         TextView passwordEdit = findViewById(R.id.passwordEdit);
         String password = passwordEdit.getText().toString();
 
 
-        Intent loggedInIntent = new Intent(this, HomepageActivity.class);
+        final Intent loggedInIntent = new Intent(this, HomepageActivity.class);
 
         Bundle bundle = new Bundle();
         bundle.putString("email", email);
@@ -48,14 +51,38 @@ public class SignInActivity extends AppCompatActivity {
         loggedInIntent.putExtras(bundle);
 
         if("".equals(email) || "".equals(password)){
-            Context context = getApplicationContext();
-            int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(context, "Enter email and password to log in", duration);
-            toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 100);
-            toast.show();
+            makeToast("Enter email and password to log in");
         }else{
-            startActivity(loggedInIntent);
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d(TAG, "signInWithEmail:success");
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                updateUI(user);
+
+                                homepageActivity(loggedInIntent);
+                                makeToast("You are now signed in again");
+
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.w(TAG, "signInWithEmail:failure", task.getException());
+                                makeToast("Authentication failed.");
+                                updateUI(null);
+                            }
+
+                            // ...
+                        }
+                    });
+
+
         }
+    }
+
+    public void homepageActivity(Intent loggedInIntent){
+        startActivity(loggedInIntent);
     }
 
     public void importantFunc(View v){
@@ -66,48 +93,28 @@ public class SignInActivity extends AppCompatActivity {
         toast.show();
     }
 
-    //ALREADY SIGNED UP -- LOGIN ACTIVITY
-    public void alreadySignedIn(View v){
+    //TEST IF USER WITH THAT EMAIL EXISTS
+    public void alreadySignedIn(String email){
 
-        TextView emailEdit = findViewById(R.id.emailEdit);
-        String email = emailEdit.getText().toString();
+        DocumentReference docRef = db.collection("users").document(email);
 
-        TextView passwordEdit = findViewById(R.id.passwordEdit);
-        String password = passwordEdit.getText().toString();
-
-
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
-
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(SignInActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                            updateUI(null);
-
-                            View v = findViewById(R.id.button_login);
-                            startLoggedInActivity(v);
-                            makeToast("You are now signed in again");
-
-                        }
-
-                        // ...
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                    } else {
+                        Log.d(TAG, "No such document");
                     }
-                });
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
     }
 
-    public void startLoggedInActivity(View v){
-        Intent loggedIn = new Intent(this, HomepageActivity.class);
-        startActivity(loggedIn);
-    }
 
     private void updateUI(FirebaseUser user) {
         if (user != null) {
