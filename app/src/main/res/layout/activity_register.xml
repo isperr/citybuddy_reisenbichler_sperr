@@ -169,5 +169,18 @@
             android:text="try register with auth"
             android:onClick="authenticateMePlease" />
 
+
+        <Button
+            android:id="@+id/mybutton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:onClick="signOut"
+            android:text="Log me out "
+            android:layout_gravity="center"
+            android:textSize="20sp"
+            android:textAllCaps="false"
+            android:layout_below="@id/mybutton2"/>
+
     </LinearLayout>
 </ScrollView>
