@@ -64,6 +64,7 @@ public class SignInActivity extends AppCompatActivity {
                                 updateUI(user);
 
                                 homepageActivity(loggedInIntent);
+                                checkDoc(email);
                                 makeToast("You are now signed in again");
 
                             } else {
@@ -94,9 +95,9 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     //TEST IF USER WITH THAT EMAIL EXISTS
-    public void alreadySignedIn(String email){
+    public void checkDoc(String email){
 
-        DocumentReference docRef = db.collection("users").document(email);
+        final DocumentReference docRef = db.collection("users").document(email);
 
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
