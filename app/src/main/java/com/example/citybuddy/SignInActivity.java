@@ -75,6 +75,7 @@ public class SignInActivity extends AppCompatActivity {
         TextView passwordEdit = findViewById(R.id.passwordEdit);
         String password = passwordEdit.getText().toString();
 
+
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -84,13 +85,18 @@ public class SignInActivity extends AppCompatActivity {
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
-                            makeToast("YES I WAS ALREADY SIGNED UP AND WILL LOGIN NOW");
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(SignInActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
+
+                            View v = findViewById(R.id.button_login);
+                            startLoggedInActivity(v);
+                            makeToast("You are now signed in again");
+
                         }
 
                         // ...
@@ -98,11 +104,16 @@ public class SignInActivity extends AppCompatActivity {
                 });
     }
 
+    public void startLoggedInActivity(View v){
+        Intent loggedIn = new Intent(this, HomepageActivity.class);
+        startActivity(loggedIn);
+    }
+
     private void updateUI(FirebaseUser user) {
         if (user != null) {
-            makeToast("logged in/registered");
+            makeToast("You are logged in now!");
         } else {
-            makeToast("not logged in/registered");
+            makeToast("Enter your information to login.");
         }
     }
 

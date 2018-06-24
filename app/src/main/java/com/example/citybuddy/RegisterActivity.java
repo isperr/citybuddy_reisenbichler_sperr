@@ -83,23 +83,22 @@ public class RegisterActivity extends AppCompatActivity {
             user.put("country", country);
             user.put("birthday", birthday.toString());
 
-            // Add a new document with a generated ID
             db.collection("users")
-                    .add(user)
-                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    .document(email)
+                    .set(user)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
-                        public void onSuccess(DocumentReference documentReference) {
-                            Log.d("DocSnippets", "DocumentSnapshot added with ID: " + documentReference.getId());
+                        public void onSuccess(Void aVoid) {
+                            Log.d("DocSnippets", "DocumentSnapshot added");
                             makeToast("Congrats! You are now registered.");
                         }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.w("DocSnippets", "Error adding document", e);
+                }
+            });
 
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.w("DocSnippets", "Error adding document", e);
-                        }
-                    });
 
             //ADD USER TO FIREBASE - AUTHENTICATION
             Log.d(TAG, "createAccount:" + email);
