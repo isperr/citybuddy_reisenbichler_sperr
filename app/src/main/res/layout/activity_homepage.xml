@@ -1,9 +1,272 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomepageActivity">
+    android:id="@+id/scrollview"
+    tools:context=".MainActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:ignore="ContentDescription"
+            android:orientation="vertical"
+            android:layout_margin="16dp"
+            android:id="@+id/relLayout"
+            android:layout_marginBottom="20dp">
+
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="20dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/logo_small" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/app_name"
+                android:textSize="20sp"
+                android:textColor="@color/darkBlueColor"
+                android:layout_below="@id/logo"
+                android:textAlignment="center"/>
+
+
+            <RelativeLayout
+                android:id="@+id/homepage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/lightGreyColor"
+                android:layout_below="@id/title"
+                android:layout_margin="16dp"
+                android:padding="16sp" >
+
+                <TextView
+                    android:id="@+id/homepage_heading"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/hello_homepage"
+                    android:textSize="22sp"
+                    android:textColor="@color/blackColor"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/signed_in_as"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/welcome_text_homepage"
+                    android:layout_below="@id/homepage_heading"
+                    android:textSize="16sp"
+                    android:paddingTop="8sp"
+                    android:layout_marginTop="16sp"
+                    android:textColor="@color/blackColor"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/sign_out_again"
+                    android:layout_below="@id/signed_in_as"
+                    android:layout_marginBottom="16sp"
+                    android:layout_marginTop="32sp">
+
+                    <TextView
+                        android:id="@+id/member"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sign_out_homepage"
+                        android:textColor="@color/blackColor"
+                        android:layout_marginBottom="8sp"
+                        android:textSize="16sp"/>
+
+                    <Button
+                        android:id="@+id/sign_up_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/here"
+                        android:textAllCaps="false"
+                        android:background="@color/darkBlueColor"
+                        android:textColor="@color/whiteColor"
+                        android:onClick="importantFunc"
+                        android:layout_gravity="center"/>
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/homepage_part2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/lightGreyColor"
+                android:layout_below="@id/homepage"
+                android:layout_margin="16dp"
+                android:padding="16sp" >
+
+                <TextView
+                    android:id="@+id/all_buddies"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/all_buddies"
+                    android:textSize="22sp"
+                    android:textColor="@color/blackColor"
+                    android:textStyle="bold"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/list_of_buddies"
+                    android:layout_below="@id/all_buddies"
+                    android:layout_marginBottom="16sp"
+                    android:layout_marginTop="16sp">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@color/darkBlueColor"
+                        android:layout_marginBottom="16sp"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/member1_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Max Mustermann"
+                            android:textColor="@color/blackColor"
+                            android:textSize="16sp"/>
+
+                        <TextView
+                            android:id="@+id/member1_showprofile"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Show profile"
+                            android:textColor="@color/lightBlueColor"
+                            android:layout_marginBottom="16sp"
+                            android:textSize="16sp"
+                            android:layout_marginLeft="8sp"
+                            android:layout_toRightOf="@id/member1_name"
+                            android:onClick="showProfile"/>
+
+                        <TextView
+                            android:id="@+id/member1_country"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Country: AT"
+                            android:textColor="@color/blackColor"
+                            android:layout_marginBottom="16sp"
+                            android:textSize="16sp"
+                            android:layout_below="@id/member1_name"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:background="@color/darkBlueColor"
+                            android:layout_below="@id/member1_country"
+                            android:layout_marginBottom="15dp"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/member2_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Susanne Muster"
+                            android:textColor="@color/blackColor"
+                            android:textSize="16sp"/>
+
+                        <TextView
+                            android:id="@+id/member2_showprofile"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Show profile"
+                            android:textColor="@color/lightBlueColor"
+                            android:layout_marginBottom="16sp"
+                            android:textSize="16sp"
+                            android:layout_marginLeft="8sp"
+                            android:layout_toRightOf="@id/member2_name"
+                            android:onClick="showProfile"/>
+
+                        <TextView
+                            android:id="@+id/member2_country"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Country: AT"
+                            android:textColor="@color/blackColor"
+                            android:layout_marginBottom="16sp"
+                            android:textSize="16sp"
+                            android:layout_below="@id/member2_name"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:background="@color/darkBlueColor"
+                            android:layout_below="@id/member2_country"
+                            android:layout_marginBottom="15dp"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/member3_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Maria Musterfrau"
+                            android:textColor="@color/blackColor"
+                            android:textSize="16sp"/>
+
+                        <TextView
+                            android:id="@+id/member3_showprofile"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Show profile"
+                            android:textColor="@color/lightBlueColor"
+                            android:layout_marginBottom="16sp"
+                            android:textSize="16sp"
+                            android:layout_marginLeft="8sp"
+                            android:layout_toRightOf="@id/member3_name"
+                            android:onClick="showProfile"/>
+
+                        <TextView
+                            android:id="@+id/member3_country"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Country: DE"
+                            android:textColor="@color/blackColor"
+                            android:layout_marginBottom="16sp"
+                            android:textSize="16sp"
+                            android:layout_below="@id/member3_name"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:background="@color/darkBlueColor"
+                            android:layout_below="@id/member3_country"
+                            android:layout_marginBottom="15dp"/>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</ScrollView>

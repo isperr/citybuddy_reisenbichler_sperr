@@ -1,9 +1,159 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileActivity">
+    android:id="@+id/scrollview"
+    tools:context=".MainActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:ignore="ContentDescription"
+            android:orientation="vertical"
+            android:layout_margin="16dp"
+            android:id="@+id/relLayout"
+            android:layout_marginBottom="20dp"
+            android:background="@color/lightGreyColor"
+            android:padding="16sp">
+
+            <TextView
+                android:id="@+id/profile_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/profile"
+                android:textSize="22sp"
+                android:textColor="@color/blackColor"
+                android:textStyle="bold"/>
+
+            <Button
+                android:id="@+id/sign_up_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edit"
+                android:textAllCaps="false"
+                android:background="@color/darkBlueColor"
+                android:textColor="@color/whiteColor"
+                android:onClick="importantFunc"
+                android:layout_gravity="center"
+                android:textSize="16sp"
+                android:layout_alignParentEnd="true"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/pic_and_name"
+                android:layout_below="@id/profile_heading">
+
+                <ImageView
+                    android:id="@+id/profile_pic"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/avatar"
+                    android:layout_below="@id/profile_heading" />
+
+                <TextView
+                    android:id="@+id/max"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="16sp"
+                    android:paddingTop="40sp"
+                    android:layout_height="match_parent"
+                    android:text="Max Mustermann"
+                    android:textColor="@color/blackColor"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/city_heading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/pic_and_name"
+                android:text="@string/city"
+                android:textSize="16sp"
+                android:textColor="@color/blackColor"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Salzburg"
+                android:layout_below="@id/city_heading"
+                android:textColor="@color/blackColor"
+                android:layout_marginLeft="16sp"
+                android:layout_marginTop="8sp"
+                android:layout_marginBottom="16sp"/>
+
+            <TextView
+                android:id="@+id/country_heading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/city"
+                android:text="@string/country"
+                android:textSize="16sp"
+                android:textColor="@color/blackColor"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/country"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Austria"
+                android:layout_below="@id/country_heading"
+                android:textColor="@color/blackColor"
+                android:layout_marginLeft="16sp"
+                android:layout_marginTop="8sp"
+                android:layout_marginBottom="16sp"/>
+
+            <TextView
+                android:id="@+id/birthday_heading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/country"
+                android:text="@string/birthday"
+                android:textSize="16sp"
+                android:textColor="@color/blackColor"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/birthday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="15.5.1995"
+                android:layout_below="@id/birthday_heading"
+                android:textColor="@color/blackColor"
+                android:layout_marginLeft="16sp"
+                android:layout_marginTop="8sp"
+                android:layout_marginBottom="16sp"/>
+
+            <TextView
+                android:id="@+id/mothertongue_heading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/birthday"
+                android:text="@string/lang_1"
+                android:textSize="16sp"
+                android:textColor="@color/blackColor"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/mothertongue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="German"
+                android:layout_below="@id/mothertongue_heading"
+                android:textColor="@color/blackColor"
+                android:layout_marginLeft="16sp"
+                android:layout_marginTop="8sp"
+                android:layout_marginBottom="16sp"/>
+
+
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>
