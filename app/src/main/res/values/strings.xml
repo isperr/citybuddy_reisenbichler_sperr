@@ -1,3 +1,39 @@
 <resources>
     <string name="app_name">CityBuddy</string>
+
+    <string name="find">Find a buddy wherever you travel!</string>
+    <string name="join">Join us now!</string>
+    <string name="register">Register</string>
+    <string name="title_activity_display_message">DisplayMessageActivity</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="sign_up">Sign up now!</string>
+    <string name="forgot">Forgot your password?</string>
+    <string name="sign_in">Sign in right here</string>
+    <string name="log_in">Log in now</string>
+    <string name="not_member">Not a member yet?</string>
+
+    <string name="enter_information">Sign up now and enter your information below:</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="password_conform">Password conformation</string>
+    <string name="country">Country</string>
+    <string name="city">City</string>
+    <string name="gender">Gender</string>
+    <string name="lang_1">Mother tongue</string>
+    <string name="hobbies">Hobbies</string>
+    <string name="interests">Interests</string>
+    <string name="desc">Description</string>
+    <string name="birthday">Birthday</string>
+
+    <string name="hello_homepage">Hello Buddy!</string>
+    <string name="welcome_text_homepage">You are now singed in </string>
+    <string name="sign_out_homepage">Want to sign out again?</string>
+
+    <string name="here">Click here</string>
+    <string name="all_buddies">Here are all the buddies</string>
+
+    <string name="profile">Profile</string>
 </resources>
