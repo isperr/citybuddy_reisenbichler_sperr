@@ -9,7 +9,10 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class HomepageActivity extends AppCompatActivity {
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +20,7 @@ public class HomepageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_homepage);
 
         signedInAs();
+        mAuth = FirebaseAuth.getInstance();
     }
 
     public void signedInAs(){
@@ -36,16 +40,22 @@ public class HomepageActivity extends AppCompatActivity {
         }
     }
 
-    public void importantFunc(View v){
-        Context context = getApplicationContext();
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(context, "Will be implemented later...", duration);
-        toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 100);
-        toast.show();
-    }
-
     public void showProfile(View v){
         Intent profileIntent = new Intent(this, ProfileActivity.class);
         startActivity(profileIntent);
+    }
+
+    public void signOut(View v) {
+        mAuth.signOut();
+        Intent mainIntent = new Intent(this, MainActivity.class);
+        startActivity(mainIntent);
+        makeToast("You are logged out now!");
+
+    }
+
+    public void makeToast(String toastText){
+        Toast toast = Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 100);
+        toast.show();
     }
 }

@@ -32,13 +32,10 @@ public class RegisterActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-
     private static final String TAG = "EmailPassword";
 
-
-
-
     public void submitLogin(View v){
+        //Views & Stringbuilder
         TextView emailEdit = findViewById(R.id.email_Edit);
         TextView passwordEdit = findViewById(R.id.password_Edit);
         TextView passwordEdit2 = findViewById(R.id.password_conf_Edit);
@@ -47,23 +44,22 @@ public class RegisterActivity extends AppCompatActivity {
         TextView countryEdit = findViewById(R.id.city_autocomplete);
         StringBuilder birthday = new StringBuilder();
 
-        String email = emailEdit.getText().toString();
-        String password = passwordEdit.getText().toString();
-        String password2 = passwordEdit2.getText().toString();
-        String first_n = first_n_Edit.getText().toString();
-        String last_n = last_n_Edit.getText().toString();
-        String country = countryEdit.getText().toString();
+        //Strings
+        String email, password, password2, first_n, last_n, country ="";
+        email = emailEdit.getText().toString();
+        password = passwordEdit.getText().toString();
+        password2 = passwordEdit2.getText().toString();
+        first_n = first_n_Edit.getText().toString();
+        last_n = last_n_Edit.getText().toString();
+        country = countryEdit.getText().toString();
 
         birthday.append(dpDate.getDayOfMonth()+". ");
         birthday.append((dpDate.getMonth() + 1)+". ");//month is 0 based
         birthday.append(dpDate.getYear());
 
-
         Intent loggedInIntent = new Intent(this, HomepageActivity.class);
-
         Bundle bundle = new Bundle();
         bundle.putString("email", email);
-
         loggedInIntent.putExtras(bundle);
 
         boolean passwordMatch = false;
@@ -71,13 +67,13 @@ public class RegisterActivity extends AppCompatActivity {
             passwordMatch = true;
         }
 
-        if("".equals(email) || !passwordMatch){
-            Context context = getApplicationContext();
-            int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(context, "Enter at least email, password and password conformation", duration);
-            toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 100);
-            toast.show();
-        }else{
+        if("".equals(email)){
+            makeToast("Enter an email to complete the registration");
+        }else if(!passwordMatch){
+            makeToast("Your passwords need to match to complete registration.");
+        }else{//email & password are correct
+
+            //ADD USER TO FIREBASE - FIRESTORE
             // Create a new user with a first and last name
             Map<String, Object> user = new HashMap<>();
             user.put("first_name", first_n);
@@ -105,45 +101,37 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     });
 
-            authenticateMePlease(v);
+            //ADD USER TO FIREBASE - AUTHENTICATION
+            Log.d(TAG, "createAccount:" + email);
+
+            mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            Toast.makeText(RegisterActivity.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
+                            // If sign in fails, display a message to the user. If sign in succeeds
+                            // the auth state listener will be notified and logic to handle the
+                            // signed in user can be handled in the listener.
+                            if (!task.isSuccessful()) {
+                                Toast.makeText(RegisterActivity.this, "Authentication failed." + task.getException(),
+                                        Toast.LENGTH_SHORT).show();
+                            } else {
+                                finish();
+                            }
+                        }
+                    });
+
+            //start new intent, change to Homepage
             startActivity(loggedInIntent);
         }
     }
 
-    public void authenticateMePlease(View v){
-        TextView emailEdit = findViewById(R.id.email_Edit);
-        TextView passwordEdit = findViewById(R.id.password_Edit);
-
-        String email = emailEdit.getText().toString();
-        String password = passwordEdit.getText().toString();
-
-        Log.d(TAG, "createAccount:" + email);
-
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Toast.makeText(RegisterActivity.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
-                        //View v = findViewById(R.id.mybutton2);
-                        //startLoggedInActivity(v);
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()) {
-                            Toast.makeText(RegisterActivity.this, "Authentication failed." + task.getException(),
-                                    Toast.LENGTH_SHORT).show();
-                        } else {
-                            finish();
-                        }
-                    }
-                });
-    }
 
     private void updateUI(FirebaseUser user) {
         if (user != null) {
-            makeToast("logged in/registered");
+            makeToast("You are now registered");
         } else {
-            makeToast("not logged in/registered");
+            makeToast("Enter at least email and password to register.");
         }
     }
 
@@ -151,16 +139,6 @@ public class RegisterActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 100);
         toast.show();
-    }
-
-    public void startLoggedInActivity(View v){
-        Intent loggedIn = new Intent(this, HomepageActivity.class);
-        startActivity(loggedIn);
-    }
-
-    public void signOut(View v) {
-        mAuth.signOut();
-        updateUI(null);
     }
 
     @Override
@@ -174,13 +152,14 @@ public class RegisterActivity extends AppCompatActivity {
                 findViewById(R.id.city_autocomplete);
         textView.setAdapter(adapter);
 
-        dpDate = (DatePicker)findViewById(R.id.calender);
         // init
+        dpDate = (DatePicker)findViewById(R.id.calender);
         dpDate.init(2000, 0, 1, null);
 
         mAuth = FirebaseAuth.getInstance();
     }
 
+    //Small country autocomplete
     private static final String[] COUNTRIES = new String[] {
             "Austria", "Australia", "Belgium", "France", "Germany", "Italy", "Spain"
     };
@@ -191,6 +170,11 @@ public class RegisterActivity extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         updateUI(currentUser);
+    }
+
+    public void signOut(View v) {
+        mAuth.signOut();
+        updateUI(null);
     }
 
 }

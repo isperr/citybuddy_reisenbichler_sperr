@@ -94,7 +94,7 @@
                         android:textAllCaps="false"
                         android:background="@color/darkBlueColor"
                         android:textColor="@color/whiteColor"
-                        android:onClick="importantFunc"
+                        android:onClick="signOut"
                         android:layout_gravity="center"/>
                 </LinearLayout>
 
