@@ -58,12 +58,12 @@ public class HomepageActivity extends AppCompatActivity {
         }
     }
 
-    public void showProfile(View v, String fullName, String homeCountry, String mothertongue, String birthday){
+    //String fullName, String homeCountry, String mothertongue, String birthday)
+    public void showProfile(View v, String fullName, String homeCountry, String birthday){
         Intent profileIntent = new Intent(this, ProfileActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("full_name", fullName);
         bundle.putString("country", homeCountry);
-        bundle.putString("mothertongue", mothertongue);
         bundle.putString("birthday", birthday);
         profileIntent.putExtras(bundle);
         startActivity(profileIntent);
@@ -98,9 +98,14 @@ public class HomepageActivity extends AppCompatActivity {
                                 Log.d(TAG, document.getId() + " => " + document.get("first_name") + document.get("country"));
 
 
+<<<<<<< HEAD
                                 final String fullName = document.get("first_name").toString() + " " + document.get("last_name").toString();
                                 final String homeCountry = document.get("first_name").toString();
                                 final String mothertongue = document.get("mothertongue").toString();
+=======
+                                final String fullName = document.get("first_name").toString() + " " +document.get("last_name").toString();
+                                final String homeCountry = document.get("country").toString();
+>>>>>>> mellie
                                 final String birthday = document.get("birthday").toString();
 
                                 //find Layout
@@ -137,7 +142,7 @@ public class HomepageActivity extends AppCompatActivity {
                                 showProfileTextView.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        showProfile(view, fullName, homeCountry, mothertongue, birthday);
+                                        showProfile(view, fullName, homeCountry, birthday);
                                     }
                                 });
                                 linearLayout.addView(showProfileTextView);
