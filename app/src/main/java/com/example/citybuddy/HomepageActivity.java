@@ -103,7 +103,7 @@ public class HomepageActivity extends AppCompatActivity {
                                 //Add name TextViews for each user
                                 TextView userNameTextView = new TextView(getBaseContext());
                                 userNameTextView.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-                                userNameTextView.setText(document.get("first_name").toString());
+                                userNameTextView.setText(document.get("first_name").toString() + " " + document.get("last_name").toString());
                                 userNameTextView.setTextColor(getResources().getColor(R.color.blackColor));
                                 userNameTextView.setTextSize(16);
                                 linearLayout.addView(userNameTextView);
@@ -111,13 +111,28 @@ public class HomepageActivity extends AppCompatActivity {
                                 //Add name TextViews for each user
                                 TextView userCountryTextView = new TextView(getBaseContext());
                                 userCountryTextView.setLayoutParams(new LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-                                userCountryTextView.setText(document.get("country").toString());
+                                userCountryTextView.setText("Country: " + document.get("country").toString());
                                 userCountryTextView.setTextColor(getResources().getColor(R.color.blackColor));
                                 userCountryTextView.setTextSize(16);
                                 linearLayout.addView(userCountryTextView);
 
+
+                                TextView showProfileTextView = new TextView(getBaseContext());
+                                showProfileTextView.setLayoutParams(new LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+                                showProfileTextView.setText("Show profile");
+                                showProfileTextView.setTextColor(getResources().getColor(R.color.lightBlueColor));
+                                showProfileTextView.setTextSize(16);
+                                showProfileTextView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        showProfile(view);
+                                    }
+                                });
+                                linearLayout.addView(showProfileTextView);
+
+
+                                //Add separating horizontal line
                                 View line = new View(getBaseContext());
-                                float width = 2;
                                 LayoutParams lineParams = new LayoutParams(LayoutParams.MATCH_PARENT, 5);
                                 lineParams.setMargins(0,60, 0, 60);
                                 line.setLayoutParams(lineParams);
@@ -125,12 +140,6 @@ public class HomepageActivity extends AppCompatActivity {
                                 linearLayout.addView(line);
 
                                 all_buddies.addView(linearLayout);
-
-
-                                LayoutParams p = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);
-                                RelativeLayout mRelativeLayout = new RelativeLayout(getBaseContext());
-                                mRelativeLayout.setLayoutParams(p);
-                                //mLayout.addView(mRelativeLayout);
 
                             }
                         } else {
