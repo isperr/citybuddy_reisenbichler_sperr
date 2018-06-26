@@ -59,12 +59,12 @@
                     android:layout_below="@id/profile_heading" />
 
                 <TextView
-                    android:id="@+id/max"
+                    android:id="@+id/profile_name"
                     android:layout_width="wrap_content"
                     android:layout_marginLeft="16sp"
                     android:paddingTop="40sp"
                     android:layout_height="match_parent"
-                    android:text="Max Mustermann"
+                    android:text="No Name"
                     android:textColor="@color/blackColor"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -83,7 +83,7 @@
                 android:id="@+id/city"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Salzburg"
+                android:text="No City"
                 android:layout_below="@id/city_heading"
                 android:textColor="@color/blackColor"
                 android:layout_marginLeft="16sp"
@@ -104,7 +104,7 @@
                 android:id="@+id/country"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Austria"
+                android:text="No Country"
                 android:layout_below="@id/country_heading"
                 android:textColor="@color/blackColor"
                 android:layout_marginLeft="16sp"
@@ -125,7 +125,7 @@
                 android:id="@+id/birthday"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="15.5.1995"
+                android:text="No Birthday"
                 android:layout_below="@id/birthday_heading"
                 android:textColor="@color/blackColor"
                 android:layout_marginLeft="16sp"
@@ -146,7 +146,7 @@
                 android:id="@+id/mothertongue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="German"
+                android:text="No Mothertongue"
                 android:layout_below="@id/mothertongue_heading"
                 android:textColor="@color/blackColor"
                 android:layout_marginLeft="16sp"

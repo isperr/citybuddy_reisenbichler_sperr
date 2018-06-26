@@ -58,8 +58,14 @@ public class HomepageActivity extends AppCompatActivity {
         }
     }
 
-    public void showProfile(View v){
+    public void showProfile(View v, String fullName, String homeCountry, String mothertongue, String birthday){
         Intent profileIntent = new Intent(this, ProfileActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("full_name", fullName);
+        bundle.putString("country", homeCountry);
+        bundle.putString("mothertongue", mothertongue);
+        bundle.putString("birthday", birthday);
+        profileIntent.putExtras(bundle);
         startActivity(profileIntent);
     }
 
@@ -91,6 +97,12 @@ public class HomepageActivity extends AppCompatActivity {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d(TAG, document.getId() + " => " + document.get("first_name") + document.get("country"));
 
+
+                                final String fullName = document.get("first_name").toString() + " " +document.get("last_name").toString();
+                                final String homeCountry = document.get("first_name").toString();
+                                final String mothertongue = document.get("mothertongue").toString();
+                                final String birthday = document.get("birthday").toString();
+
                                 //find Layout
                                 LinearLayout all_buddies = (LinearLayout) findViewById(R.id.buddy_layout);
 
@@ -103,7 +115,7 @@ public class HomepageActivity extends AppCompatActivity {
                                 //Add name TextViews for each user
                                 TextView userNameTextView = new TextView(getBaseContext());
                                 userNameTextView.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-                                userNameTextView.setText(document.get("first_name").toString() + " " + document.get("last_name").toString());
+                                userNameTextView.setText(fullName);
                                 userNameTextView.setTextColor(getResources().getColor(R.color.blackColor));
                                 userNameTextView.setTextSize(16);
                                 linearLayout.addView(userNameTextView);
@@ -111,7 +123,7 @@ public class HomepageActivity extends AppCompatActivity {
                                 //Add name TextViews for each user
                                 TextView userCountryTextView = new TextView(getBaseContext());
                                 userCountryTextView.setLayoutParams(new LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-                                userCountryTextView.setText("Country: " + document.get("country").toString());
+                                userCountryTextView.setText("Country: " + homeCountry);
                                 userCountryTextView.setTextColor(getResources().getColor(R.color.blackColor));
                                 userCountryTextView.setTextSize(16);
                                 linearLayout.addView(userCountryTextView);
@@ -125,7 +137,7 @@ public class HomepageActivity extends AppCompatActivity {
                                 showProfileTextView.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        showProfile(view);
+                                        showProfile(view, fullName, homeCountry, mothertongue, birthday);
                                     }
                                 });
                                 linearLayout.addView(showProfileTextView);
