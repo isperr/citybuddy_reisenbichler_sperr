@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +19,12 @@ public class HomepageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
+
+        LinearLayout all_buddies = (LinearLayout) findViewById(R.id.buddy_layout);
+
+        //Add dynamic TextViews for each user
+        TextView newUserTextView = new TextView(this);
+        newUserTextView.setLayoutParams(new LayoutParams())
 
         signedInAs();
         mAuth = FirebaseAuth.getInstance();
@@ -39,6 +46,8 @@ public class HomepageActivity extends AppCompatActivity {
             singedInUser.setText(String.valueOf(resultString));
         }
     }
+
+    
 
     public void showProfile(View v){
         Intent profileIntent = new Intent(this, ProfileActivity.class);

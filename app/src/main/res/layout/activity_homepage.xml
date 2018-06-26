@@ -100,14 +100,15 @@
 
             </RelativeLayout>
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/homepage_part2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/lightGreyColor"
                 android:layout_below="@id/homepage"
                 android:layout_margin="16dp"
-                android:padding="16sp" >
+                android:padding="16sp"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/all_buddies"
@@ -133,138 +134,18 @@
                         android:background="@color/darkBlueColor"
                         android:layout_marginBottom="16sp"/>
 
-                    <RelativeLayout
+                    <LinearLayout
+                        android:id="@+id/buddy_layout"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/member1_name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Max Mustermann"
-                            android:textColor="@color/blackColor"
-                            android:textSize="16sp"/>
+                    </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/member1_showprofile"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Show profile"
-                            android:textColor="@color/lightBlueColor"
-                            android:layout_marginBottom="16sp"
-                            android:textSize="16sp"
-                            android:layout_marginLeft="8sp"
-                            android:layout_toRightOf="@id/member1_name"
-                            android:onClick="showProfile"/>
-
-                        <TextView
-                            android:id="@+id/member1_country"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Country: AT"
-                            android:textColor="@color/blackColor"
-                            android:layout_marginBottom="16sp"
-                            android:textSize="16sp"
-                            android:layout_below="@id/member1_name"/>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="2dp"
-                            android:background="@color/darkBlueColor"
-                            android:layout_below="@id/member1_country"
-                            android:layout_marginBottom="15dp"/>
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/member2_name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Susanne Muster"
-                            android:textColor="@color/blackColor"
-                            android:textSize="16sp"/>
-
-                        <TextView
-                            android:id="@+id/member2_showprofile"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Show profile"
-                            android:textColor="@color/lightBlueColor"
-                            android:layout_marginBottom="16sp"
-                            android:textSize="16sp"
-                            android:layout_marginLeft="8sp"
-                            android:layout_toRightOf="@id/member2_name"
-                            android:onClick="showProfile"/>
-
-                        <TextView
-                            android:id="@+id/member2_country"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Country: AT"
-                            android:textColor="@color/blackColor"
-                            android:layout_marginBottom="16sp"
-                            android:textSize="16sp"
-                            android:layout_below="@id/member2_name"/>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="2dp"
-                            android:background="@color/darkBlueColor"
-                            android:layout_below="@id/member2_country"
-                            android:layout_marginBottom="15dp"/>
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/member3_name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Maria Musterfrau"
-                            android:textColor="@color/blackColor"
-                            android:textSize="16sp"/>
-
-                        <TextView
-                            android:id="@+id/member3_showprofile"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Show profile"
-                            android:textColor="@color/lightBlueColor"
-                            android:layout_marginBottom="16sp"
-                            android:textSize="16sp"
-                            android:layout_marginLeft="8sp"
-                            android:layout_toRightOf="@id/member3_name"
-                            android:onClick="showProfile"/>
-
-                        <TextView
-                            android:id="@+id/member3_country"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Country: DE"
-                            android:textColor="@color/blackColor"
-                            android:layout_marginBottom="16sp"
-                            android:textSize="16sp"
-                            android:layout_below="@id/member3_name"/>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="2dp"
-                            android:background="@color/darkBlueColor"
-                            android:layout_below="@id/member3_country"
-                            android:layout_marginBottom="15dp"/>
-
-                    </RelativeLayout>
 
                 </LinearLayout>
 
-            </RelativeLayout>
+            </LinearLayout>
 
         </RelativeLayout>
 
