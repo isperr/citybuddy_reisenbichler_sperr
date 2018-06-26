@@ -86,12 +86,26 @@ public class SignInActivity extends AppCompatActivity {
         startActivity(loggedInIntent);
     }
 
-    public void importantFunc(View v){
-        Context context = getApplicationContext();
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(context, "Will be implemented later...", duration);
-        toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 100);
-        toast.show();
+    public void forgotPassword(View v){
+        EditText emailEdit = (EditText) findViewById(R.id.emailEdit);
+        String email = emailEdit.getText().toString();
+
+        if("".equals(email)){
+            makeToast("You need to enter your email address above to reset your password");
+        }else{
+            mAuth.sendPasswordResetEmail(email)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Log.d(TAG, "Email sent.");
+                                makeToast("An email to reset your password was sent to your email address.");
+                            }
+                        }
+                    });
+        }
+
+
     }
 
     //TEST IF USER WITH THAT EMAIL EXISTS
@@ -131,4 +145,8 @@ public class SignInActivity extends AppCompatActivity {
         toast.show();
     }
 
+    public void register(View v){
+        Intent registerIntent = new Intent(this, RegisterActivity.class);
+        startActivity(registerIntent);
+    }
 }

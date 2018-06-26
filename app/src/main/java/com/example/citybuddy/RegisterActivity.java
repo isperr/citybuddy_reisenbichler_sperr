@@ -120,6 +120,7 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     });
 
+
             //start new intent, change to Homepage
             startActivity(loggedInIntent);
         }
