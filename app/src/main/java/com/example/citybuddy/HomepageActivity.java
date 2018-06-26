@@ -6,9 +6,12 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.LinearLayout.LayoutParams;
@@ -76,6 +79,9 @@ public class HomepageActivity extends AppCompatActivity {
 
     public void createUserLayout(){
 
+
+
+
         db.collection("users")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -92,25 +98,39 @@ public class HomepageActivity extends AppCompatActivity {
                                 LinearLayout linearLayout = new LinearLayout(getBaseContext());
                                 linearLayout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
                                         LayoutParams.MATCH_PARENT));
-                                linearLayout.setOrientation(LinearLayout.VERTICAL);
+                                linearLayout.setOrientation(LinearLayout.VERTICAL);;
 
                                 //Add name TextViews for each user
                                 TextView userNameTextView = new TextView(getBaseContext());
                                 userNameTextView.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-                                userNameTextView.setText("");
-                                userNameTextView.setTextColor(0x333333);
+                                userNameTextView.setText(document.get("first_name").toString());
+                                userNameTextView.setTextColor(getResources().getColor(R.color.blackColor));
                                 userNameTextView.setTextSize(16);
                                 linearLayout.addView(userNameTextView);
 
                                 //Add name TextViews for each user
                                 TextView userCountryTextView = new TextView(getBaseContext());
                                 userCountryTextView.setLayoutParams(new LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-                                userCountryTextView.setText("");
-                                userCountryTextView.setTextColor(0x333333);
+                                userCountryTextView.setText(document.get("country").toString());
+                                userCountryTextView.setTextColor(getResources().getColor(R.color.blackColor));
                                 userCountryTextView.setTextSize(16);
                                 linearLayout.addView(userCountryTextView);
 
+                                View line = new View(getBaseContext());
+                                float width = 2;
+                                LayoutParams lineParams = new LayoutParams(LayoutParams.MATCH_PARENT, 5);
+                                lineParams.setMargins(0,60, 0, 60);
+                                line.setLayoutParams(lineParams);
+                                line.setBackgroundColor(getResources().getColor(R.color.darkBlueColor));
+                                linearLayout.addView(line);
+
                                 all_buddies.addView(linearLayout);
+
+
+                                LayoutParams p = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);
+                                RelativeLayout mRelativeLayout = new RelativeLayout(getBaseContext());
+                                mRelativeLayout.setLayoutParams(p);
+                                //mLayout.addView(mRelativeLayout);
 
                             }
                         } else {
