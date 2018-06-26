@@ -172,9 +172,4 @@ public class RegisterActivity extends AppCompatActivity {
         updateUI(currentUser);
     }
 
-    public void signOut(View v) {
-        mAuth.signOut();
-        updateUI(null);
-    }
-
 }
