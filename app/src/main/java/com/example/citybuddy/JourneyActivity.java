@@ -1,50 +1,47 @@
 package com.example.citybuddy;
 
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class JourneyActivity extends AppCompatActivity{
+public class JourneyActivity extends AppCompatActivity {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_journey);
-
     }
+
 
     public void submitJourney(){
 
-        TextView destination = findViewById(R.id.destination);
+        //TextView destination = findViewById(R.id.destination);
         StringBuilder arrival = new StringBuilder();
         StringBuilder departure = new StringBuilder();
 
         //ADD USER TO FIREBASE - FIRESTORE
         // Create a new journey
         Map<String, Object> journey = new HashMap<>();
-        journey.put("user", user);
-        journey.put("destination", destination);
+        //journey.put("user", user);
+        //journey.put("destination", destination);
         journey.put("arrival", arrival.toString());
         journey.put("departure", departure.toString());
 
-        db.collection("journeys")
+       /* db.collection("journeys")
                 .document(user)
                 .set(journey)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -58,7 +55,7 @@ public class JourneyActivity extends AppCompatActivity{
             public void onFailure(@NonNull Exception e) {
                 Log.w("DocSnippets", "Error adding document", e);
             }
-        });
+        });*/
 
     }
 
