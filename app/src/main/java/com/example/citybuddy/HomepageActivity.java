@@ -98,7 +98,7 @@ public class HomepageActivity extends AppCompatActivity {
                                 Log.d(TAG, document.getId() + " => " + document.get("first_name") + document.get("country"));
 
 
-                                final String fullName = document.get("first_name").toString() + " " +document.get("last_name").toString();
+                                final String fullName = document.get("first_name").toString() + " " + document.get("last_name").toString();
                                 final String homeCountry = document.get("first_name").toString();
                                 final String mothertongue = document.get("mothertongue").toString();
                                 final String birthday = document.get("birthday").toString();
