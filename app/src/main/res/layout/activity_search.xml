@@ -1,0 +1,119 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/scrollview"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:ignore="ContentDescription"
+            android:orientation="vertical"
+            android:layout_margin="16dp"
+            android:id="@+id/relLayout"
+            android:layout_marginBottom="20dp">
+
+
+            <RelativeLayout
+                android:id="@+id/searcg_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/beigeColor"
+                android:layout_below="@id/title"
+                android:layout_margin="16dp"
+                android:padding="16sp">
+
+                <TextView
+                    android:id="@+id/search_heading"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/searchbud"
+                    android:textSize="22sp"
+                    android:textAlignment="center"
+                    android:textColor="@color/blackColor"/>
+
+                <EditText
+                    android:id="@+id/search_field"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="@string/search_hint"
+                    android:layout_below="@id/search_heading"
+                    android:textSize="20sp"
+                    android:background="@drawable/border"
+                    android:padding="5dp"
+                    android:layout_marginTop="10dp"
+                    android:textAlignment="center"/>
+
+                <Button
+                    android:id="@+id/button_signin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:onClick="searchFunction"
+                    android:text="@string/search"
+                    android:background="@color/darkBlueColor"
+                    android:layout_gravity="center"
+                    android:textSize="20sp"
+                    android:layout_below="@id/search_field"
+                    android:textColor="@color/whiteColor"
+                    android:textAllCaps="false"/>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/homepage_part2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/beigeColor"
+                android:layout_below="@id/searcg_area"
+                android:layout_margin="16dp"
+                android:padding="16sp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/all_buddies"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/all_buddies"
+                    android:textSize="22sp"
+                    android:textColor="@color/blackColor"
+                    android:textStyle="bold"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/list_of_buddies"
+                    android:layout_below="@id/all_buddies"
+                    android:layout_marginBottom="16sp"
+                    android:layout_marginTop="16sp">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@color/darkBlueColor"
+                        android:layout_marginBottom="16sp"/>
+
+                    <LinearLayout
+                        android:id="@+id/buddy_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>

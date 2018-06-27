@@ -81,6 +81,7 @@
                     android:layout_gravity="center"
                     android:textSize="20sp"
                     android:layout_below="@id/join"
+                    android:textColor="@color/whiteColor"
                     android:textAllCaps="false"/>
 
                 <Button

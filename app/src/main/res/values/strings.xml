@@ -27,13 +27,18 @@
     <string name="interests">Interests</string>
     <string name="desc">Description</string>
     <string name="birthday">Birthday</string>
+    <string name="no">No Data</string>
 
     <string name="hello_homepage">Hello Buddy!</string>
     <string name="welcome_text_homepage">You are now singed in </string>
     <string name="sign_out_homepage">Want to sign out again?</string>
+    <string name="search_text">Want to find a buddy?</string>
 
     <string name="here">Click here</string>
     <string name="all_buddies">Here are all the buddies</string>
 
     <string name="profile">Profile</string>
+    <string name="searchbud">Search for a Buddy here</string>
+    <string name="search">Search now</string>
+    <string name="search_hint">enter search</string>
 </resources>

@@ -77,6 +77,11 @@ public class HomepageActivity extends AppCompatActivity {
 
     }
 
+    public void startSearch(View v){
+        Intent searchIntent = new Intent(this, SearchActivity.class);
+        startActivity(searchIntent);
+    }
+
     public void makeToast(String toastText){
         Toast toast = Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 100);
