@@ -90,9 +90,6 @@ public class HomepageActivity extends AppCompatActivity {
 
     public void createUserLayout(){
 
-
-
-
         db.collection("users")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

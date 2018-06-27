@@ -38,7 +38,7 @@
     <string name="all_buddies">Here are all the buddies</string>
 
     <string name="profile">Profile</string>
-    <string name="searchbud">Search for a Buddy here</string>
+    <string name="searchbud">Search for a Buddy here (by Country)</string>
     <string name="search">Search now</string>
     <string name="search_hint">enter search</string>
 </resources>
