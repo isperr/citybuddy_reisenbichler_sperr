@@ -65,7 +65,6 @@ public class SignInActivity extends AppCompatActivity {
 
                                 homepageActivity(loggedInIntent);
                                 checkDoc(email);
-                                makeToast("You are now signed in again");
 
                             } else {
                                 // If sign in fails, display a message to the user.
