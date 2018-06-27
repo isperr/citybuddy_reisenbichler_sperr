@@ -21,10 +21,9 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void setProfile(){
 
-        TextView fullname = findViewById(R.id.profile_name);
+        TextView fullName = findViewById(R.id.profile_name);
         TextView country = findViewById(R.id.country);
         TextView birthday = findViewById(R.id.birthday);
-        TextView mothertongue = findViewById(R.id.mothertongue);
 
 
         Intent intent = getIntent();
@@ -36,12 +35,11 @@ public class ProfileActivity extends AppCompatActivity {
             String profileName = intent.getStringExtra("full_name");
             String profileCountry = intent.getStringExtra("country");
             String profileBirthday = intent.getStringExtra("birthday");
-            String profileMothertongue = intent.getStringExtra("mothertongue");
 
-            fullname.setText(String.valueOf(profileName));
+            fullName.setText(String.valueOf(profileName));
             country.setText(String.valueOf(profileCountry));
             birthday.setText(String.valueOf(profileBirthday));
-            mothertongue.setText(String.valueOf(profileMothertongue));
+
         }
 
     }
