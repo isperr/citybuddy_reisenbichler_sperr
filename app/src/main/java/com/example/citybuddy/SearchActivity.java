@@ -48,102 +48,117 @@ public class SearchActivity extends AppCompatActivity {
 
         EditText searchInput = (EditText) findViewById(R.id.search_field);
         String input = searchInput.getText().toString();
-        input = input.toLowerCase();
-        String cap = input.substring(0,1).toUpperCase();
-        String country = cap + input.substring(1);
 
-        db.collection("users")
-                .whereEqualTo("country", country)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
+        if(input.length() == 0){
+            makeToast("Enter a query to search!");
+            //Add no results found information
+            TextView noResultsTextView = new TextView(getBaseContext());
+            noResultsTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            noResultsTextView.setText(R.string.nothing);
+            noResultsTextView.setTextColor(getResources().getColor(R.color.blackColor));
+            noResultsTextView.setTextSize(16);
+            all_buddies.addView(noResultsTextView);
+        }
+        else{
+            input = input.toLowerCase();
+            String cap = input.substring(0,1).toUpperCase();
+            String country = cap + input.substring(1);
 
-                            int counter = 0;
+            db.collection("users")
+                    .whereEqualTo("country", country)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
 
-                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                int counter = 0;
 
-                                counter = counter + 1;
+                                for (QueryDocumentSnapshot document : task.getResult()) {
 
-                                Log.d(TAG, document.getId() + " => " + document.get("first_name") + document.get("country"));
+                                    counter = counter + 1;
 
-
-                                final String fullName = document.get("first_name").toString() + " " +document.get("last_name").toString();
-                                final String homeCountry = document.get("country").toString();
-                                final String birthday = document.get("birthday").toString();
-
-                                //find Layout
-                                LinearLayout all_buddies = (LinearLayout) findViewById(R.id.search_results);
-
-                                //create View for Each User
-                                LinearLayout linearLayout = new LinearLayout(getBaseContext());
-                                linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                                        LinearLayout.LayoutParams.MATCH_PARENT));
-                                linearLayout.setOrientation(LinearLayout.VERTICAL);;
-
-                                //Add name TextViews for each user
-                                TextView userNameTextView = new TextView(getBaseContext());
-                                userNameTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-                                userNameTextView.setText(fullName);
-                                userNameTextView.setTextColor(getResources().getColor(R.color.blackColor));
-                                userNameTextView.setTextSize(16);
-                                linearLayout.addView(userNameTextView);
-
-                                //Add name TextViews for each user
-                                TextView userCountryTextView = new TextView(getBaseContext());
-                                userCountryTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-                                userCountryTextView.setText("Country: " + homeCountry);
-                                userCountryTextView.setTextColor(getResources().getColor(R.color.blackColor));
-                                userCountryTextView.setTextSize(16);
-                                linearLayout.addView(userCountryTextView);
+                                    Log.d(TAG, document.getId() + " => " + document.get("first_name") + document.get("country"));
 
 
-                                TextView showProfileTextView = new TextView(getBaseContext());
-                                showProfileTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-                                showProfileTextView.setText("Show profile");
-                                showProfileTextView.setTextColor(getResources().getColor(R.color.lightBlueColor));
-                                showProfileTextView.setTextSize(16);
-                                showProfileTextView.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        showProfile(view, fullName, homeCountry, birthday);
-                                    }
-                                });
-                                linearLayout.addView(showProfileTextView);
+                                    final String fullName = document.get("first_name").toString() + " " +document.get("last_name").toString();
+                                    final String homeCountry = document.get("country").toString();
+                                    final String birthday = document.get("birthday").toString();
+
+                                    //find Layout
+                                    LinearLayout all_buddies = (LinearLayout) findViewById(R.id.search_results);
+
+                                    //create View for Each User
+                                    LinearLayout linearLayout = new LinearLayout(getBaseContext());
+                                    linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                                            LinearLayout.LayoutParams.MATCH_PARENT));
+                                    linearLayout.setOrientation(LinearLayout.VERTICAL);;
+
+                                    //Add name TextViews for each user
+                                    TextView userNameTextView = new TextView(getBaseContext());
+                                    userNameTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                                    userNameTextView.setText(fullName);
+                                    userNameTextView.setTextColor(getResources().getColor(R.color.blackColor));
+                                    userNameTextView.setTextSize(16);
+                                    linearLayout.addView(userNameTextView);
+
+                                    //Add name TextViews for each user
+                                    TextView userCountryTextView = new TextView(getBaseContext());
+                                    userCountryTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                                    userCountryTextView.setText("Country: " + homeCountry);
+                                    userCountryTextView.setTextColor(getResources().getColor(R.color.blackColor));
+                                    userCountryTextView.setTextSize(16);
+                                    linearLayout.addView(userCountryTextView);
 
 
-                                //Add separating horizontal line
-                                View line = new View(getBaseContext());
-                                LinearLayout.LayoutParams lineParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 5);
-                                lineParams.setMargins(0,60, 0, 60);
-                                line.setLayoutParams(lineParams);
-                                line.setBackgroundColor(getResources().getColor(R.color.darkBlueColor));
-                                linearLayout.addView(line);
+                                    TextView showProfileTextView = new TextView(getBaseContext());
+                                    showProfileTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                                    showProfileTextView.setText("Show profile");
+                                    showProfileTextView.setTextColor(getResources().getColor(R.color.lightBlueColor));
+                                    showProfileTextView.setTextSize(16);
+                                    showProfileTextView.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            showProfile(view, fullName, homeCountry, birthday);
+                                        }
+                                    });
+                                    linearLayout.addView(showProfileTextView);
 
-                                all_buddies.addView(linearLayout);
+
+                                    //Add separating horizontal line
+                                    View line = new View(getBaseContext());
+                                    LinearLayout.LayoutParams lineParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 5);
+                                    lineParams.setMargins(0,60, 0, 60);
+                                    line.setLayoutParams(lineParams);
+                                    line.setBackgroundColor(getResources().getColor(R.color.darkBlueColor));
+                                    linearLayout.addView(line);
+
+                                    all_buddies.addView(linearLayout);
+
+                                }
+
+                                if(counter == 0){
+                                    makeToast("SORRY!");
+                                    //find Layout
+                                    LinearLayout all_buddies = (LinearLayout) findViewById(R.id.search_results);
+
+                                    //Add no results found information
+                                    TextView noResultsTextView = new TextView(getBaseContext());
+                                    noResultsTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                                    noResultsTextView.setText(R.string.no_res);
+                                    noResultsTextView.setTextColor(getResources().getColor(R.color.blackColor));
+                                    noResultsTextView.setTextSize(16);
+                                    all_buddies.addView(noResultsTextView);
+                                }
+                            } else {
+                                Log.d(TAG, "Error getting documents: ", task.getException());
 
                             }
-
-                            if(counter == 0){
-                                makeToast("SORRY!");
-                                //find Layout
-                                LinearLayout all_buddies = (LinearLayout) findViewById(R.id.search_results);
-
-                                //Add no results found information
-                                TextView noResultsTextView = new TextView(getBaseContext());
-                                noResultsTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-                                noResultsTextView.setText("Sorry, no results found for this search!");
-                                noResultsTextView.setTextColor(getResources().getColor(R.color.blackColor));
-                                noResultsTextView.setTextSize(16);
-                                all_buddies.addView(noResultsTextView);
-                            }
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-
                         }
-                    }
-                });
+                    });
+        }
+
+
     }
 
     public void makeToast(String toastText){

@@ -41,4 +41,7 @@
     <string name="searchbud">Search for a Buddy here (by Country)</string>
     <string name="search">Search now</string>
     <string name="search_hint">enter search</string>
+
+    <string name="no_res">Sorry, no results found for this search!</string>
+    <string name="nothing">Sorry, but you did not enter anything.</string>
 </resources>

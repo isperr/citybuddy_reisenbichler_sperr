@@ -41,8 +41,7 @@ public class SignInActivity extends AppCompatActivity {
 
         TextView passwordEdit = findViewById(R.id.passwordEdit);
         String password = passwordEdit.getText().toString();
-
-
+        
         final Intent loggedInIntent = new Intent(this, HomepageActivity.class);
 
         Bundle bundle = new Bundle();
