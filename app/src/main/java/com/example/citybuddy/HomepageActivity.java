@@ -20,6 +20,9 @@ import android.widget.LinearLayout.LayoutParams;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -59,12 +62,13 @@ public class HomepageActivity extends AppCompatActivity {
     }
 
     //String fullName, String homeCountry, String mothertongue, String birthday)
-    public void showProfile(View v, String fullName, String homeCountry, String birthday){
+    public void showProfile(String fullName, String homeCountry, String birthday, Boolean personal){
         Intent profileIntent = new Intent(this, ProfileActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("full_name", fullName);
         bundle.putString("country", homeCountry);
         bundle.putString("birthday", birthday);
+        bundle.putBoolean("personal", personal);
         profileIntent.putExtras(bundle);
         startActivity(profileIntent);
     }
@@ -98,8 +102,6 @@ public class HomepageActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d(TAG, document.getId() + " => " + document.get("first_name") + document.get("country"));
-
-
 
                                 final String fullName = document.get("first_name").toString() + " " +document.get("last_name").toString();
                                 final String homeCountry = document.get("country").toString();
@@ -139,7 +141,7 @@ public class HomepageActivity extends AppCompatActivity {
                                 showProfileTextView.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        showProfile(view, fullName, homeCountry, birthday);
+                                        showProfile(fullName, homeCountry, birthday, false);
                                     }
                                 });
                                 linearLayout.addView(showProfileTextView);
@@ -162,5 +164,41 @@ public class HomepageActivity extends AppCompatActivity {
                     }
                 });
 
+    }
+
+    public void profile(View v){
+        String email = "nochmal@email.com";
+
+        //FirebaseUser user = mAuth.getCurrentUser();
+        //String email = user.getEmail();
+
+        makeToast(email);
+
+        final DocumentReference docRef = db.collection("users").document(email);
+
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                        final String fullName = document.get("first_name").toString() + " " + document.get("last_name").toString();
+                        final String homeCountry = document.get("country").toString();
+                        final String birthday = document.get("birthday").toString();
+
+                        Log.d(TAG, fullName + " " + homeCountry + " " + birthday);
+
+                        showProfile(fullName, homeCountry, birthday, true);
+
+                    } else {
+                        Log.d(TAG, "No such document");
+                        makeToast("Geht ned");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
     }
 }

@@ -72,29 +72,29 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:id="@+id/sign_out_again"
+                    android:id="@+id/profile_section"
                     android:layout_below="@id/signed_in_as"
                     android:layout_marginBottom="16sp"
                     android:layout_marginTop="32sp">
 
                     <TextView
-                        android:id="@+id/member"
+                        android:id="@+id/profile"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/sign_out_homepage"
+                        android:text="@string/your_profile"
                         android:textColor="@color/blackColor"
                         android:layout_marginBottom="8sp"
                         android:textSize="16sp"/>
 
                     <Button
-                        android:id="@+id/sign_up_button"
+                        android:id="@+id/profile_button"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/here"
                         android:textAllCaps="false"
                         android:background="@color/darkBlueColor"
                         android:textColor="@color/whiteColor"
-                        android:onClick="signOut"
+                        android:onClick="profile"
                         android:layout_gravity="center"/>
                 </LinearLayout>
 
@@ -102,8 +102,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:id="@+id/search_layout"
-                    android:layout_below="@id/sign_out_again"
+                    android:id="@+id/search_section"
+                    android:layout_below="@id/profile_section"
                     android:layout_marginBottom="16sp"
                     android:layout_marginTop="5sp">
 
@@ -125,6 +125,36 @@
                         android:background="@drawable/border"
                         android:textColor="@color/blackColor"
                         android:onClick="startSearch"
+                        android:layout_gravity="center"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/sign_out_again"
+                    android:layout_below="@id/search_section"
+                    android:layout_marginBottom="16sp"
+                    android:layout_marginTop="5sp">
+
+                    <TextView
+                        android:id="@+id/member"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sign_out_homepage"
+                        android:textColor="@color/blackColor"
+                        android:layout_marginBottom="8sp"
+                        android:textSize="16sp"/>
+
+                    <Button
+                        android:id="@+id/sign_up_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/here"
+                        android:textAllCaps="false"
+                        android:background="@color/darkBlueColor"
+                        android:textColor="@color/whiteColor"
+                        android:onClick="signOut"
                         android:layout_gravity="center"/>
                 </LinearLayout>
 

@@ -38,9 +38,11 @@
     <string name="all_buddies">Here are all the buddies</string>
 
     <string name="profile">Profile</string>
+    <string name="your_profile">Want to look at your profile?</string>
     <string name="searchbud">Search for a Buddy here (by Country)</string>
     <string name="search">Search now</string>
     <string name="search_hint">enter search</string>
+    <string name="save">Save changes</string>
 
     <string name="no_res">Sorry, no results found for this search!</string>
     <string name="nothing">Sorry, but you did not enter anything.</string>

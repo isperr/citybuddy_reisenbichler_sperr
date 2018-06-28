@@ -31,18 +31,6 @@
                 android:textColor="@color/blackColor"
                 android:textStyle="bold"/>
 
-            <Button
-                android:id="@+id/edit_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Edit"
-                android:textAllCaps="false"
-                android:background="@color/darkBlueColor"
-                android:textColor="@color/whiteColor"
-                android:onClick="edit"
-                android:layout_gravity="center"
-                android:layout_alignParentRight="true"
-                android:textSize="16sp" />
 
 
             <LinearLayout
@@ -59,13 +47,13 @@
                     android:src="@drawable/avatar"
                     android:layout_below="@id/profile_heading" />
 
-                <TextView
+                <EditText
                     android:id="@+id/profile_name"
                     android:layout_width="wrap_content"
                     android:layout_marginLeft="16sp"
                     android:paddingTop="40sp"
                     android:layout_height="match_parent"
-                    android:text="@string/no"
+                    android:hint="@string/no"
                     android:textColor="@color/blackColor"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -80,7 +68,7 @@
                 android:textColor="@color/blackColor"
                 android:textStyle="bold"/>
 
-            <TextView
+            <EditText
                 android:id="@+id/city"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -101,7 +89,7 @@
                 android:textColor="@color/blackColor"
                 android:textStyle="bold"/>
 
-            <TextView
+            <EditText
                 android:id="@+id/country"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -122,7 +110,7 @@
                 android:textColor="@color/blackColor"
                 android:textStyle="bold"/>
 
-            <TextView
+            <EditText
                 android:id="@+id/birthday"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -143,7 +131,7 @@
                 android:textColor="@color/blackColor"
                 android:textStyle="bold"/>
 
-            <TextView
+            <EditText
                 android:id="@+id/mothertongue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -154,7 +142,23 @@
                 android:layout_marginTop="8sp"
                 android:layout_marginBottom="16sp"/>
 
+            <Button
+                android:id="@+id/save_edit_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:onClick="saveEdit"
+                android:text="@string/save"
+                android:textColor="@color/whiteColor"
+                android:background="@color/darkBlueColor"
+                android:layout_gravity="center"
+                android:textSize="20sp"
+                android:layout_below="@id/mothertongue"
+                android:textAllCaps="false" />
 
         </RelativeLayout>
+
+
     </LinearLayout>
 </ScrollView>

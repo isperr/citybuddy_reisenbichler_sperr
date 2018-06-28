@@ -79,8 +79,7 @@ public class SearchActivity extends AppCompatActivity {
                                     counter = counter + 1;
 
                                     Log.d(TAG, document.getId() + " => " + document.get("first_name") + document.get("country"));
-
-
+                                    
                                     final String fullName = document.get("first_name").toString() + " " +document.get("last_name").toString();
                                     final String homeCountry = document.get("country").toString();
                                     final String birthday = document.get("birthday").toString();
