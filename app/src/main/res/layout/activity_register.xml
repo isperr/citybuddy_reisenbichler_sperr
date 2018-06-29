@@ -130,12 +130,28 @@
                 android:layout_below="@id/city"/>
 
             <TextView
+                android:id="@+id/language"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/lang_1"
+                android:textColor="@color/blackColor"
+                android:layout_below="@id/city_autocomplete" />
+
+            <AutoCompleteTextView
+                android:id="@+id/language_autocomplete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter your mothertongue ..."
+                android:textSize="12sp"
+                android:layout_below="@id/language"/>
+
+            <TextView
                 android:id="@+id/birthday"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/birthday"
                 android:textColor="@color/blackColor"
-                android:layout_below="@id/city_autocomplete" />
+                android:layout_below="@id/language_autocomplete" />
 
             <DatePicker
                 android:id="@+id/calender"

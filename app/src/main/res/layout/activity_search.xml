@@ -33,18 +33,41 @@
                 <TextView
                     android:id="@+id/search_heading"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="@string/searchbud"
-                    android:textSize="22sp"
+                    android:textSize="21sp"
                     android:textAlignment="center"
                     android:textColor="@color/blackColor"/>
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/search_params_field"
+                    android:layout_below="@id/search_heading"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginTop="10dp">
+
+                    <RadioButton
+                        android:id="@+id/country_param"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/bycountry"
+                        android:layout_marginRight="10dp"/>
+                    <RadioButton
+                        android:id="@+id/lang_param"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/bylang"/>
+
+                </RadioGroup>
 
                 <EditText
                     android:id="@+id/search_field"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/search_hint"
-                    android:layout_below="@id/search_heading"
+                    android:layout_below="@id/search_params_field"
                     android:textSize="20sp"
                     android:background="@drawable/border"
                     android:padding="5dp"
@@ -83,7 +106,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="@string/all_buddies"
-                    android:textSize="22sp"
+                    android:textSize="21sp"
                     android:textColor="@color/blackColor"
                     android:textStyle="bold"/>
 

@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,12 +31,13 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
     }
 
-    public void showProfile(View v, String fullName, String homeCountry, String birthday){
+    public void showProfile(View v, String fullName, String homeCountry, String birthday, Boolean personal){
         Intent profileIntent = new Intent(this, ProfileActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("full_name", fullName);
         bundle.putString("country", homeCountry);
         bundle.putString("birthday", birthday);
+        bundle.putBoolean("personal", personal);
         profileIntent.putExtras(bundle);
         startActivity(profileIntent);
     }
@@ -45,12 +47,17 @@ public class SearchActivity extends AppCompatActivity {
         LinearLayout all_buddies = (LinearLayout) findViewById(R.id.search_results);
         all_buddies.removeAllViews();
 
+        String param = "";
+
+        RadioButton country = (RadioButton) findViewById(R.id.country_param);
+        RadioButton language = (RadioButton) findViewById(R.id.lang_param);
 
         EditText searchInput = (EditText) findViewById(R.id.search_field);
         String input = searchInput.getText().toString();
+        String searchValue = input.toLowerCase();
 
-        if(input.length() == 0){
-            makeToast("Enter a query to search!");
+        if(input.length() == 0 || (!country.isChecked() && !language.isChecked())){
+            makeToast("Enter a query to search or check a parameter!");
             //Add no results found information
             TextView noResultsTextView = new TextView(getBaseContext());
             noResultsTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
@@ -60,12 +67,16 @@ public class SearchActivity extends AppCompatActivity {
             all_buddies.addView(noResultsTextView);
         }
         else{
-            input = input.toLowerCase();
-            String cap = input.substring(0,1).toUpperCase();
-            String country = cap + input.substring(1);
+
+            if(country.isChecked()){
+                param = "country";
+            }
+            else if(language.isChecked()){
+                param = "mothertongue";
+            }
 
             db.collection("users")
-                    .whereEqualTo("country", country)
+                    .whereEqualTo(param, searchValue)
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
@@ -86,68 +97,14 @@ public class SearchActivity extends AppCompatActivity {
 
                                     //find Layout
                                     LinearLayout all_buddies = (LinearLayout) findViewById(R.id.search_results);
-
-                                    //create View for Each User
-                                    LinearLayout linearLayout = new LinearLayout(getBaseContext());
-                                    linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                                            LinearLayout.LayoutParams.MATCH_PARENT));
-                                    linearLayout.setOrientation(LinearLayout.VERTICAL);;
-
-                                    //Add name TextViews for each user
-                                    TextView userNameTextView = new TextView(getBaseContext());
-                                    userNameTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-                                    userNameTextView.setText(fullName);
-                                    userNameTextView.setTextColor(getResources().getColor(R.color.blackColor));
-                                    userNameTextView.setTextSize(16);
-                                    linearLayout.addView(userNameTextView);
-
-                                    //Add name TextViews for each user
-                                    TextView userCountryTextView = new TextView(getBaseContext());
-                                    userCountryTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-                                    userCountryTextView.setText("Country: " + homeCountry);
-                                    userCountryTextView.setTextColor(getResources().getColor(R.color.blackColor));
-                                    userCountryTextView.setTextSize(16);
-                                    linearLayout.addView(userCountryTextView);
-
-
-                                    TextView showProfileTextView = new TextView(getBaseContext());
-                                    showProfileTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-                                    showProfileTextView.setText("Show profile");
-                                    showProfileTextView.setTextColor(getResources().getColor(R.color.lightBlueColor));
-                                    showProfileTextView.setTextSize(16);
-                                    showProfileTextView.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-                                            showProfile(view, fullName, homeCountry, birthday);
-                                        }
-                                    });
-                                    linearLayout.addView(showProfileTextView);
-
-
-                                    //Add separating horizontal line
-                                    View line = new View(getBaseContext());
-                                    LinearLayout.LayoutParams lineParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 5);
-                                    lineParams.setMargins(0,60, 0, 60);
-                                    line.setLayoutParams(lineParams);
-                                    line.setBackgroundColor(getResources().getColor(R.color.darkBlueColor));
-                                    linearLayout.addView(line);
-
-                                    all_buddies.addView(linearLayout);
-
+                                    createResultViews(all_buddies, fullName, homeCountry, birthday);
                                 }
 
                                 if(counter == 0){
-                                    makeToast("SORRY!");
                                     //find Layout
                                     LinearLayout all_buddies = (LinearLayout) findViewById(R.id.search_results);
+                                    createNoResultView(all_buddies);
 
-                                    //Add no results found information
-                                    TextView noResultsTextView = new TextView(getBaseContext());
-                                    noResultsTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-                                    noResultsTextView.setText(R.string.no_res);
-                                    noResultsTextView.setTextColor(getResources().getColor(R.color.blackColor));
-                                    noResultsTextView.setTextSize(16);
-                                    all_buddies.addView(noResultsTextView);
                                 }
                             } else {
                                 Log.d(TAG, "Error getting documents: ", task.getException());
@@ -160,8 +117,68 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
+    public void createResultViews(LinearLayout baseLayout, final String fullName, final String homeCountry, final String birthday){
+        //create View for Each User
+        LinearLayout linearLayout = new LinearLayout(getBaseContext());
+        linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT));
+        linearLayout.setOrientation(LinearLayout.VERTICAL);;
+
+        //Add name TextViews for each user
+        TextView userNameTextView = new TextView(getBaseContext());
+        userNameTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        userNameTextView.setText(fullName);
+        userNameTextView.setTextColor(getResources().getColor(R.color.blackColor));
+        userNameTextView.setTextSize(16);
+        linearLayout.addView(userNameTextView);
+
+        //Add name TextViews for each user
+        TextView userCountryTextView = new TextView(getBaseContext());
+        userCountryTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        userCountryTextView.setText("Country: " + homeCountry);
+        userCountryTextView.setTextColor(getResources().getColor(R.color.blackColor));
+        userCountryTextView.setTextSize(16);
+        linearLayout.addView(userCountryTextView);
+
+
+        TextView showProfileTextView = new TextView(getBaseContext());
+        showProfileTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        showProfileTextView.setText("Show profile");
+        showProfileTextView.setTextColor(getResources().getColor(R.color.lightBlueColor));
+        showProfileTextView.setTextSize(16);
+        showProfileTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showProfile(view, fullName, homeCountry, birthday, false);
+            }
+        });
+        linearLayout.addView(showProfileTextView);
+
+
+        //Add separating horizontal line
+        View line = new View(getBaseContext());
+        LinearLayout.LayoutParams lineParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 5);
+        lineParams.setMargins(0,60, 0, 60);
+        line.setLayoutParams(lineParams);
+        line.setBackgroundColor(getResources().getColor(R.color.darkBlueColor));
+        linearLayout.addView(line);
+
+        baseLayout.addView(linearLayout);
+    }
+
+    public void createNoResultView(LinearLayout baseLayout){
+
+        //Add no results found information
+        TextView noResultsTextView = new TextView(getBaseContext());
+        noResultsTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        noResultsTextView.setText(R.string.no_res);
+        noResultsTextView.setTextColor(getResources().getColor(R.color.blackColor));
+        noResultsTextView.setTextSize(16);
+        baseLayout.addView(noResultsTextView);
+    }
+
     public void makeToast(String toastText){
-        Toast toast = Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_LONG);
         toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 100);
         toast.show();
     }
