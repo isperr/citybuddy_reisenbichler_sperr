@@ -35,10 +35,10 @@ public class ProfileActivity extends AppCompatActivity {
         if(bundle.isEmpty()){
            makeToast("No data loaded for this user.");
         }else{
-            String profileName = intent.getStringExtra("full_name");
-            String profileCountry = intent.getStringExtra("country");
+            String profileName = firstLetterUpper(intent.getStringExtra("full_name"));
+            String profileCountry = firstLetterUpper(intent.getStringExtra("country"));
             String profileBirthday = intent.getStringExtra("birthday");
-            String profileMothertongue = intent.getStringExtra("mothertongue");
+            String profileMothertongue = firstLetterUpper(intent.getStringExtra("mothertongue"));
             Boolean personal = intent.getBooleanExtra("personal", false);
             if(!personal){
                 Button editButton = findViewById(R.id.edit_button);
@@ -51,6 +51,17 @@ public class ProfileActivity extends AppCompatActivity {
             mothertongue.setText(String.valueOf(profileMothertongue));
         }
 
+    }
+
+    private String firstLetterUpper(String input){
+        String s = "";
+        String current = "";
+        String[] words = input.split("\\s+");
+        for(int i = 0; i < words.length; i++){
+            current = words[i].substring(0, 1).toUpperCase() + words[i].substring(1);
+            s += current + " ";
+        }
+        return s;
     }
 
     public void makeToast(String toastText){
