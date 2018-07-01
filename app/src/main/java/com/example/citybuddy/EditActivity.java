@@ -28,7 +28,7 @@ public class EditActivity extends AppCompatActivity {
     private static final String TAG = "NameCountry";
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    EditText fullName;
+    TextView fullName;
     EditText country;
     EditText birthday;
     EditText mothertongue;
@@ -48,7 +48,7 @@ public class EditActivity extends AppCompatActivity {
     public void setProfile(){
 
 
-        EditText fullName = findViewById(R.id.profile_name);
+        TextView fullName = findViewById(R.id.profile_name);
         EditText country = findViewById(R.id.country);
         EditText birthday = findViewById(R.id.birthday);
         EditText mothertongue = findViewById(R.id.mothertongue);
@@ -64,7 +64,7 @@ public class EditActivity extends AppCompatActivity {
             String profileMothertongue = intent.getStringExtra("mothertongue");
             Boolean personal = intent.getBooleanExtra("personal", false);
             if(personal){
-                makeToast("This is your profile! Feel free to edit any of your data here!");
+                makeToast("Edit your profile here!");
             }else{
                 Button editButton = findViewById(R.id.edit_button);
                 editButton.setVisibility(View.GONE);
@@ -92,9 +92,9 @@ public class EditActivity extends AppCompatActivity {
 
     public void saveEdit(View v){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String useremail = user.getEmail();
+        String userEmail = user.getEmail();
 
-        DocumentReference currentUser = db.collection("users").document(useremail);
+        DocumentReference currentUser = db.collection("users").document(userEmail);
 
         final String editName = fullName.getText().toString();
         final String editCountry = country.getText().toString();

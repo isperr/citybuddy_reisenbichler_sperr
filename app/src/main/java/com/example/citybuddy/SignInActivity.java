@@ -63,16 +63,11 @@ public class SignInActivity extends AppCompatActivity {
                                 updateUI(user);
 
                                 homepageActivity(loggedInIntent);
-                                checkDoc(email);
-
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                makeToast("Authentication failed.");
-                                updateUI(null);
+                                makeToast("User authentication failed.");
                             }
-
-                            // ...
                         }
                     });
 
@@ -105,29 +100,6 @@ public class SignInActivity extends AppCompatActivity {
 
 
     }
-
-    //TEST IF USER WITH THAT EMAIL EXISTS
-    public void checkDoc(String email){
-
-        final DocumentReference docRef = db.collection("users").document(email);
-
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-                    } else {
-                        Log.d(TAG, "No such document");
-                    }
-                } else {
-                    Log.d(TAG, "get failed with ", task.getException());
-                }
-            }
-        });
-    }
-
 
     private void updateUI(FirebaseUser user) {
         if (user != null) {

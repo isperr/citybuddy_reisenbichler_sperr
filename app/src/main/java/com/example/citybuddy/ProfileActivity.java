@@ -40,9 +40,7 @@ public class ProfileActivity extends AppCompatActivity {
             String profileBirthday = intent.getStringExtra("birthday");
             String profileMothertongue = intent.getStringExtra("mothertongue");
             Boolean personal = intent.getBooleanExtra("personal", false);
-            if(personal){
-                makeToast("This is your profile! Feel free to edit any of your data here!");
-            }else{
+            if(!personal){
                 Button editButton = findViewById(R.id.edit_button);
                 editButton.setVisibility(View.GONE);
             }

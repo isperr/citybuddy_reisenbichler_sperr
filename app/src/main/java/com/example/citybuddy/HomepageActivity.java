@@ -174,8 +174,6 @@ public class HomepageActivity extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String useremail = user.getEmail();
 
-        makeToast(useremail);
-
         final DocumentReference docRef = db.collection("users").document(useremail);
 
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -196,7 +194,7 @@ public class HomepageActivity extends AppCompatActivity {
 
                     } else {
                         Log.d(TAG, "No such document");
-                        makeToast("Geht ned");
+                        makeToast("Sorry, there was a mistake!");
                     }
                 } else {
                     Log.d(TAG, "get failed with ", task.getException());
