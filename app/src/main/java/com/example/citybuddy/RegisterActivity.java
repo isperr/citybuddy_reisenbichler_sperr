@@ -1,10 +1,10 @@
 package com.example.citybuddy;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.media.Image;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,18 +29,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 public class RegisterActivity extends AppCompatActivity {
     DatePicker dpDate;
@@ -169,9 +167,7 @@ public class RegisterActivity extends AppCompatActivity {
         toast.show();
     }
 
-
-
-    private void uploadProfileImage(View v){
+    private void chooseImage(View v){
         //StorageReference profileRef = storageRef.child("profile_images/user");
         //makeToast("Hey");
         Intent intent = new Intent();
@@ -189,7 +185,20 @@ public class RegisterActivity extends AppCompatActivity {
             filePath = data.getData();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-                imageView.setImageBitmap(bitmap);
+                //imageView.setImageBitmap(bitmap);
+                Drawable drawable = new BitmapDrawable(getResources(), bitmap);
+                imageView.setBackgroundDrawable(drawable);
+
+                int h = bitmap.getHeight();
+                int w = bitmap.getWidth();
+                if(h > w){
+                    imageView.getLayoutParams().height = 700;
+                    imageView.getLayoutParams().width = 500;
+                }
+                if(h < w){
+                    imageView.getLayoutParams().height = 500;
+                    imageView.getLayoutParams().width = 700;
+                }
             }
             catch (IOException e)
             {
@@ -198,43 +207,41 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    private void testMe(View v){
-        //StorageReference avatar = storageRef.child("profile_images/avatar.png");
-        //makeToast(avatar.getBucket());
+    private void uploadImage(View v){
         if(filePath != null)
         {
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
 
-            StorageReference ref = storageRef.child("profile_images/isabella.sperr@gmail.com");
+            EditText emailEdit = findViewById(R.id.email_Edit);
+            String email = emailEdit.getText().toString();
+
+            StorageReference ref = storageRef.child("profile_images/" + email);
             ref.putFile(filePath)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            progressDialog.dismiss();
-                            makeToast("Uploaded");
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            progressDialog.dismiss();
-                            makeToast("Failed " + e.getMessage());
-                        }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
-                                    .getTotalByteCount());
-                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
-                        }
-                    });
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        progressDialog.dismiss();
+                        makeToast("Uploaded");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        progressDialog.dismiss();
+                        makeToast("Failed " + e.getMessage());
+                    }
+                })
+                .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                        double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
+                                .getTotalByteCount());
+                        progressDialog.setMessage("Uploaded "+(int)progress+"%");
+                    }
+                });
         }
-
-
-
     }
 
     @Override
@@ -260,21 +267,21 @@ public class RegisterActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        imageView = findViewById(R.id.image_test);
+        imageView = findViewById(R.id.image_upload);
         btnChoose = findViewById(R.id.image_upload);
         btnUpload = findViewById(R.id.upload_me);
 
         btnChoose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uploadProfileImage(v);
+                chooseImage(v);
             }
         });
 
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                testMe(v);
+                uploadImage(v);
             }
         });
     }
