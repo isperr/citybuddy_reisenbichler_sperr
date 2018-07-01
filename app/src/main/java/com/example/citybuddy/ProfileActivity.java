@@ -24,12 +24,10 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void setProfile(){
-
         TextView fullName = findViewById(R.id.profile_name);
         TextView country = findViewById(R.id.country);
         TextView birthday = findViewById(R.id.birthday);
         TextView mothertongue = findViewById(R.id.mothertongue);
-
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();

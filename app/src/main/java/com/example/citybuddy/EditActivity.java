@@ -13,6 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,22 +28,30 @@ public class EditActivity extends AppCompatActivity {
     private static final String TAG = "NameCountry";
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+    EditText fullName;
+    EditText country;
+    EditText birthday;
+    EditText mothertongue;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
 
         setProfile();
+
+        fullName = findViewById(R.id.profile_name);
+        country = findViewById(R.id.country);
+        birthday = findViewById(R.id.birthday);
+        mothertongue = findViewById(R.id.mothertongue);
     }
 
     public void setProfile(){
+
 
         EditText fullName = findViewById(R.id.profile_name);
         EditText country = findViewById(R.id.country);
         EditText birthday = findViewById(R.id.birthday);
         EditText mothertongue = findViewById(R.id.mothertongue);
-
-
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
 
@@ -68,19 +78,48 @@ public class EditActivity extends AppCompatActivity {
 
     }
 
-    public void showProfile(String fullName, String homeCountry, String birthday, Boolean personal){
+    public void showProfile(String fullName, String homeCountry, String birthday, String mothertongue, Boolean personal){
         Intent profileIntent = new Intent(this, ProfileActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("full_name", fullName);
         bundle.putString("country", homeCountry);
         bundle.putString("birthday", birthday);
+        bundle.putString("mothertongue", mothertongue);
         bundle.putBoolean("personal", personal);
         profileIntent.putExtras(bundle);
         startActivity(profileIntent);
     }
 
     public void saveEdit(View v){
-        makeToast("cooolio");
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String useremail = user.getEmail();
+
+        DocumentReference currentUser = db.collection("users").document(useremail);
+
+        final String editName = fullName.getText().toString();
+        final String editCountry = country.getText().toString();
+        final String editBirthday = birthday.getText().toString();
+        final String editMothertongue = mothertongue.getText().toString();
+
+        currentUser
+                .update(
+                        "country", editCountry,
+                        "birthday", editBirthday,
+                        "mothertongue", editMothertongue)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully updated!");
+                        showProfile(editName, editCountry, editBirthday, editMothertongue, true);
+                        makeToast("Your profile was successfully updated!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error updating document", e);
+                    }
+                });
     }
 
     public void makeToast(String toastText){

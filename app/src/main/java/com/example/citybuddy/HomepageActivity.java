@@ -171,11 +171,6 @@ public class HomepageActivity extends AppCompatActivity {
     }
 
     public void profile(View v){
-        String email = "nochmal@email.com";
-
-        //FirebaseUser user = mAuth.getCurrentUser();
-        //String email = user.getEmail();
-
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String useremail = user.getEmail();
 
