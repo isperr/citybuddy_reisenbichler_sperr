@@ -23,6 +23,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,6 +35,10 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final String TAG = "EmailPassword";
+
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageRef = storage.getReference();
+
 
     public void submitLogin(View v){
         //Views & Stringbuilder
@@ -144,6 +150,11 @@ public class RegisterActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 100);
         toast.show();
+    }
+
+    public void uploadProfileImage(View v){
+
+        StorageReference profileRef = storageRef.child("profile_images/user");
     }
 
     @Override

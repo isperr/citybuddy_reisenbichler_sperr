@@ -27,6 +27,7 @@
     <string name="interests">Interests</string>
     <string name="desc">Description</string>
     <string name="birthday">Birthday</string>
+    <string name="image">Upload a profile picture</string>
     <string name="no">No Data</string>
 
     <string name="hello_homepage">Hello Buddy!</string>
