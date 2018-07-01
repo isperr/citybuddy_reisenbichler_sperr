@@ -39,7 +39,7 @@
                 android:textAllCaps="false"
                 android:background="@color/darkBlueColor"
                 android:textColor="@color/whiteColor"
-                android:onClick="edit"
+                android:onClick="profileEdit"
                 android:layout_gravity="center"
                 android:layout_alignParentRight="true"
                 android:textSize="16sp" />

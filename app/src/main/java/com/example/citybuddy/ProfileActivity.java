@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 public class ProfileActivity extends AppCompatActivity {
 
     @Override
@@ -26,6 +28,7 @@ public class ProfileActivity extends AppCompatActivity {
         TextView fullName = findViewById(R.id.profile_name);
         TextView country = findViewById(R.id.country);
         TextView birthday = findViewById(R.id.birthday);
+        TextView mothertongue = findViewById(R.id.mothertongue);
 
 
         Intent intent = getIntent();
@@ -37,6 +40,7 @@ public class ProfileActivity extends AppCompatActivity {
             String profileName = intent.getStringExtra("full_name");
             String profileCountry = intent.getStringExtra("country");
             String profileBirthday = intent.getStringExtra("birthday");
+            String profileMothertongue = intent.getStringExtra("mothertongue");
             Boolean personal = intent.getBooleanExtra("personal", false);
             if(personal){
                 makeToast("This is your profile! Feel free to edit any of your data here!");
@@ -48,6 +52,7 @@ public class ProfileActivity extends AppCompatActivity {
             fullName.setText(String.valueOf(profileName));
             country.setText(String.valueOf(profileCountry));
             birthday.setText(String.valueOf(profileBirthday));
+            mothertongue.setText(String.valueOf(profileMothertongue));
         }
 
     }
@@ -58,20 +63,30 @@ public class ProfileActivity extends AppCompatActivity {
         toast.show();
     }
 
-    public void edit(View v){
-        Intent editIntent = new Intent(this, EditActivity.class);
 
+    public void profileEdit(View v){
         TextView fullName = findViewById(R.id.profile_name);
         TextView country = findViewById(R.id.country);
         TextView birthday = findViewById(R.id.birthday);
+        TextView mothertongue = findViewById(R.id.mothertongue);
 
+        String editName = fullName.getText().toString();
+        String editCountry = country.getText().toString();
+        String editBirthday = birthday.getText().toString();
+        String editMothertongue = mothertongue.getText().toString();
+
+        showProfile(editName, editCountry, editBirthday, editMothertongue, true);
+    }
+
+    public void showProfile(String fullName, String homeCountry, String birthday, String mothertongue, Boolean personal){
+        Intent editIntent = new Intent(this, EditActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putString("full_name", "Isabella Sperr");
-        bundle.putString("country", "Austria");
-        bundle.putString("birthday", "1. 1. 2000");
+        bundle.putString("full_name", fullName);
+        bundle.putString("country", homeCountry);
+        bundle.putString("birthday", birthday);
+        bundle.putString("mothertongue", mothertongue);
+        bundle.putBoolean("personal", personal);
         editIntent.putExtras(bundle);
-        startActivity(editIntent);
-
         startActivity(editIntent);
     }
 }

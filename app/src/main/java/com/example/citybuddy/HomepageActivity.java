@@ -61,12 +61,13 @@ public class HomepageActivity extends AppCompatActivity {
         }
     }
 
-    public void showProfile(String fullName, String homeCountry, String birthday, Boolean personal){
+    public void showProfile(String fullName, String homeCountry, String birthday, String mothertongue, Boolean personal){
         Intent profileIntent = new Intent(this, ProfileActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("full_name", fullName);
         bundle.putString("country", homeCountry);
         bundle.putString("birthday", birthday);
+        bundle.putString("mothertongue", mothertongue);
         bundle.putBoolean("personal", personal);
         profileIntent.putExtras(bundle);
         startActivity(profileIntent);
@@ -105,10 +106,11 @@ public class HomepageActivity extends AppCompatActivity {
                                 final String fullName = document.get("first_name").toString() + " " +document.get("last_name").toString();
                                 final String homeCountry = document.get("country").toString();
                                 final String birthday = document.get("birthday").toString();
+                                final String mothertongue = document.get("mothertongue").toString();
 
                                 //find Layout
                                 LinearLayout all_buddies = (LinearLayout) findViewById(R.id.buddy_layout);
-                                createUsersView(all_buddies, fullName, homeCountry, birthday);
+                                createUsersView(all_buddies, fullName, homeCountry, birthday, mothertongue);
 
                             }
                         } else {
@@ -119,7 +121,7 @@ public class HomepageActivity extends AppCompatActivity {
 
     }
 
-    public void createUsersView(LinearLayout baseLayout, final String fullName, final String homeCountry, final String birthday){
+    public void createUsersView(LinearLayout baseLayout, final String fullName, final String homeCountry, final String birthday, final String mothertongue){
         //create View for Each User
         LinearLayout linearLayout = new LinearLayout(getBaseContext());
         linearLayout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
@@ -151,7 +153,7 @@ public class HomepageActivity extends AppCompatActivity {
         showProfileTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showProfile(fullName, homeCountry, birthday, false);
+                showProfile(fullName, homeCountry, birthday, mothertongue, false);
             }
         });
         linearLayout.addView(showProfileTextView);
@@ -191,10 +193,11 @@ public class HomepageActivity extends AppCompatActivity {
                         final String fullName = document.get("first_name").toString() + " " + document.get("last_name").toString();
                         final String homeCountry = document.get("country").toString();
                         final String birthday = document.get("birthday").toString();
+                        final String mothertongue = document.get("mothertongue").toString();
 
                         Log.d(TAG, fullName + " " + homeCountry + " " + birthday);
 
-                        showProfile(fullName, homeCountry, birthday, true);
+                        showProfile(fullName, homeCountry, birthday, mothertongue, true);
 
                     } else {
                         Log.d(TAG, "No such document");

@@ -31,56 +31,41 @@ public class EditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
 
-        setUserParams();
+        setProfile();
     }
 
-    public void edit(View v){
-        EditText fullName = findViewById(R.id.profile_name);
-        fullName.setText(String.valueOf("Oh yeeees!"));
-    }
+    public void setProfile(){
 
-    public void setUserParams(){
-        //FirebaseUser user = mAuth.getCurrentUser();
-        //String email = user.getEmail();
-        String email = "nochmal@email.com";
-
-        final DocumentReference docRef = db.collection("users").document(email);
-
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-                        final String fullName = document.get("first_name").toString() + " " + document.get("last_name").toString();
-                        final String homeCountry = document.get("country").toString();
-                        final String birthday = document.get("birthday").toString();
-
-                        Log.d(TAG, fullName + " " + homeCountry + " " + birthday);
-
-                        setProfile(fullName, homeCountry, birthday);
-                        //showProfile(fullName, homeCountry, birthday, true);
-
-                    } else {
-                        Log.d(TAG, "No such document");
-                        makeToast("Geht ned");
-                    }
-                } else {
-                    Log.d(TAG, "get failed with ", task.getException());
-                }
-            }
-        });
-    }
-
-    public void setProfile(String n, String c, String b){
         EditText fullName = findViewById(R.id.profile_name);
         EditText country = findViewById(R.id.country);
         EditText birthday = findViewById(R.id.birthday);
+        EditText mothertongue = findViewById(R.id.mothertongue);
 
-        fullName.setText(String.valueOf(n));
-        country.setText(String.valueOf(c));
-        birthday.setText(String.valueOf(b));
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+
+        if(bundle.isEmpty()){
+            makeToast("No data loaded for this user.");
+        }else{
+            String profileName = intent.getStringExtra("full_name");
+            String profileCountry = intent.getStringExtra("country");
+            String profileBirthday = intent.getStringExtra("birthday");
+            String profileMothertongue = intent.getStringExtra("mothertongue");
+            Boolean personal = intent.getBooleanExtra("personal", false);
+            if(personal){
+                makeToast("This is your profile! Feel free to edit any of your data here!");
+            }else{
+                Button editButton = findViewById(R.id.edit_button);
+                editButton.setVisibility(View.GONE);
+            }
+
+            fullName.setText(String.valueOf(profileName));
+            country.setText(String.valueOf(profileCountry));
+            birthday.setText(String.valueOf(profileBirthday));
+            mothertongue.setText(String.valueOf(profileMothertongue));
+        }
+
     }
 
     public void showProfile(String fullName, String homeCountry, String birthday, Boolean personal){
