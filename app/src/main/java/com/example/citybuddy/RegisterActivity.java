@@ -128,37 +128,22 @@ public class RegisterActivity extends AppCompatActivity {
 
             //ADD USER TO FIREBASE - AUTHENTICATION
             Log.d(TAG, "createAccount:" + email);
-
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            Toast.makeText(RegisterActivity.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
-                            // If sign in fails, display a message to the user. If sign in succeeds
-                            // the auth state listener will be notified and logic to handle the
-                            // signed in user can be handled in the listener.
                             if (!task.isSuccessful()) {
-                                Toast.makeText(RegisterActivity.this, "Authentication failed." + task.getException(),
-                                        Toast.LENGTH_SHORT).show();
+                                makeToast("Authentication failed.");
                             } else {
                                 finish();
                             }
                         }
                     });
 
-            uploadImage(v);
+            //uploadImage(v);
 
             //start new intent, change to Homepage
             startActivity(loggedInIntent);
-        }
-    }
-
-
-    private void updateUI(FirebaseUser user) {
-        if (user != null) {
-            makeToast("You are now registered");
-        } else {
-            makeToast("Enter at least email and password to register.");
         }
     }
 
@@ -169,8 +154,6 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void chooseImage(View v){
-        //StorageReference profileRef = storageRef.child("profile_images/user");
-        //makeToast("Hey");
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -250,6 +233,8 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        makeToast("Enter at least email and password to register.");
+
         ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_dropdown_item_1line, COUNTRIES);
         AutoCompleteTextView countryTextView = (AutoCompleteTextView)
@@ -300,9 +285,7 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
+
     }
 
 }
