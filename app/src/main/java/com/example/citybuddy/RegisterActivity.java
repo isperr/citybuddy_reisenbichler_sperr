@@ -146,6 +146,7 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     });
 
+            uploadImage(v);
 
             //start new intent, change to Homepage
             startActivity(loggedInIntent);
@@ -278,12 +279,12 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        btnUpload.setOnClickListener(new View.OnClickListener() {
+        /*btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 uploadImage(v);
             }
-        });
+        });*/
     }
 
     //Small country autocomplete

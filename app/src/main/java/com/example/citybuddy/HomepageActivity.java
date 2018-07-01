@@ -174,9 +174,12 @@ public class HomepageActivity extends AppCompatActivity {
         //FirebaseUser user = mAuth.getCurrentUser();
         //String email = user.getEmail();
 
-        makeToast(email);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String useremail = user.getEmail();
 
-        final DocumentReference docRef = db.collection("users").document(email);
+        makeToast(useremail);
+
+        final DocumentReference docRef = db.collection("users").document(useremail);
 
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
