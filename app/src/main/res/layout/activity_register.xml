@@ -161,6 +161,23 @@
                 android:datePickerMode="spinner"
                 android:calendarViewShown="false" />
 
+            <TextView
+                android:id="@+id/image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/image"
+                android:textColor="@color/blackColor"
+                android:layout_below="@id/calender" />
+
+            <ImageView
+                android:id="@+id/image_upload"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_below="@+id/image"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/nothing_uploaded"
+                android:onClick="uploadProfileImage"/>
+
             <Button
                 android:id="@+id/button_login"
                 android:layout_width="match_parent"
@@ -173,7 +190,7 @@
                 android:background="@color/darkBlueColor"
                 android:layout_gravity="center"
                 android:textSize="20sp"
-                android:layout_below="@id/calender"
+                android:layout_below="@id/image_upload"
                 android:textAllCaps="false"/>
 
         </RelativeLayout>
