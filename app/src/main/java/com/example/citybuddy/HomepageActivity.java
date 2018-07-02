@@ -95,9 +95,7 @@ public class HomepageActivity extends AppCompatActivity {
     public void createUserLayout(){
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         final String useremail = user.getEmail();
-
-
-
+        
         db.collection("users")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
