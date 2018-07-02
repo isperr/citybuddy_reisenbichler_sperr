@@ -22,59 +22,30 @@
             android:background="@color/beigeColor"
             android:padding="16sp">
 
+
             <TextView
-                android:id="@+id/profile_heading"
+                android:id="@+id/profile_name"
                 android:layout_width="wrap_content"
+                android:layout_marginRight="16sp"
+                android:layout_marginTop="8sp"
                 android:layout_height="match_parent"
-                android:text="@string/profile"
-                android:textSize="22sp"
+                android:text="@string/no"
                 android:textColor="@color/blackColor"
+                android:textSize="22sp"
                 android:textStyle="bold"/>
 
-            <Button
-                android:id="@+id/edit_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Edit"
-                android:textAllCaps="false"
-                android:background="@color/darkBlueColor"
-                android:textColor="@color/whiteColor"
-                android:onClick="profileEdit"
-                android:layout_gravity="center"
-                android:layout_alignParentRight="true"
-                android:textSize="16sp" />
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:id="@+id/pic_and_name"
-                android:layout_below="@id/profile_heading">
-
-                <ImageView
-                    android:id="@+id/profile_pic"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:src="@drawable/avatar"
-                    android:layout_below="@id/profile_heading" />
-
-                <TextView
-                    android:id="@+id/profile_name"
-                    android:layout_width="wrap_content"
-                    android:layout_marginLeft="16sp"
-                    android:paddingTop="40sp"
-                    android:layout_height="match_parent"
-                    android:text="@string/no"
-                    android:textColor="@color/blackColor"
-                    android:textSize="16sp" />
-            </LinearLayout>
+            <ImageView
+                android:id="@+id/profile_pic"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/avatar"
+                android:layout_below="@id/profile_name"/>
 
             <TextView
                 android:id="@+id/city_heading"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/pic_and_name"
+                android:layout_below="@id/profile_pic"
                 android:text="@string/city"
                 android:textSize="16sp"
                 android:textColor="@color/blackColor"
@@ -153,6 +124,18 @@
                 android:layout_marginLeft="16sp"
                 android:layout_marginTop="8sp"
                 android:layout_marginBottom="16sp"/>
+
+            <Button
+                android:id="@+id/edit_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Edit"
+                android:textAllCaps="false"
+                android:background="@color/darkBlueColor"
+                android:textColor="@color/whiteColor"
+                android:onClick="profileEdit"
+                android:textSize="16sp"
+                android:layout_below="@id/mothertongue"/>
 
 
         </RelativeLayout>

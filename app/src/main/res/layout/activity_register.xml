@@ -194,13 +194,6 @@
                 android:textAllCaps="false"/>
 
         </RelativeLayout>
-        
-        <Button
-            android:id="@+id/upload_me"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" 
-            android:text="test me pic"
-            android:onClick="testmenow"/>
 
         <ImageView
             android:id="@+id/image_test"

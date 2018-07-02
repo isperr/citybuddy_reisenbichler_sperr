@@ -1,6 +1,12 @@
 package com.example.citybuddy;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +15,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +28,12 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.IOException;
 
 public class EditActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -28,26 +41,128 @@ public class EditActivity extends AppCompatActivity {
     private static final String TAG = "NameCountry";
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageRef = storage.getReference();
+
     TextView fullName;
     EditText country;
     EditText birthday;
     EditText mothertongue;
+
+    //Views & other vars for imageupload
+    ImageView imageView;
+    ImageView btnChoose;
+    Button btnUpload;
+    Uri filePath;
+    final int PICK_IMAGE_REQUEST = 71;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
 
         setProfile();
+        mAuth = FirebaseAuth.getInstance();
 
         fullName = findViewById(R.id.profile_name);
         country = findViewById(R.id.country);
         birthday = findViewById(R.id.birthday);
         mothertongue = findViewById(R.id.mothertongue);
+
+        imageView = findViewById(R.id.profile_pic);
+        btnChoose = findViewById(R.id.profile_pic);
+        btnUpload = findViewById(R.id.upload);
+        btnChoose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseImage(v);
+            }
+        });
+
+        btnUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                uploadImage(v);
+            }
+        });
+    }
+
+    private void chooseImage(View v){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                && data != null && data.getData() != null )
+        {
+            filePath = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                //imageView.setImageBitmap(bitmap);
+                Drawable drawable = new BitmapDrawable(getResources(), bitmap);
+                imageView.setBackgroundDrawable(drawable);
+
+                int h = bitmap.getHeight();
+                int w = bitmap.getWidth();
+                if(h > w){
+                    imageView.getLayoutParams().height = 700;
+                    imageView.getLayoutParams().width = 500;
+                }
+                if(h < w){
+                    imageView.getLayoutParams().height = 500;
+                    imageView.getLayoutParams().width = 700;
+                }
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void uploadImage(View v){
+        if(filePath != null)
+        {
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle("Uploading...");
+            progressDialog.show();
+
+            FirebaseUser user = mAuth.getCurrentUser();
+            String email = user.getEmail();
+
+            StorageReference ref = storageRef.child("profile_images/" + email);
+            ref.putFile(filePath)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            progressDialog.dismiss();
+                            makeToast("Uploaded");
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressDialog.dismiss();
+                            makeToast("Failed " + e.getMessage());
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
+                                    .getTotalByteCount());
+                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
+                        }
+                    });
+        }
     }
 
     public void setProfile(){
-
-
         TextView fullName = findViewById(R.id.profile_name);
         EditText country = findViewById(R.id.country);
         EditText birthday = findViewById(R.id.birthday);
@@ -75,7 +190,6 @@ public class EditActivity extends AppCompatActivity {
             birthday.setText(String.valueOf(profileBirthday));
             mothertongue.setText(String.valueOf(profileMothertongue));
         }
-
     }
 
     public void showProfile(String fullName, String homeCountry, String birthday, String mothertongue, Boolean personal){
@@ -91,7 +205,7 @@ public class EditActivity extends AppCompatActivity {
     }
 
 
-    public void saveEdit(View v){
+    public void saveEdit(final View v){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userEmail = user.getEmail();
 
@@ -111,6 +225,7 @@ public class EditActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d(TAG, "DocumentSnapshot successfully updated!");
+                        chooseImage(v);
                         showProfile(editName, editCountry, editBirthday, editMothertongue, true);
                         makeToast("Your profile was successfully updated!");
                     }

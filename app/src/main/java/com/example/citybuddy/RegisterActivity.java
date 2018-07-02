@@ -253,16 +253,16 @@ public class RegisterActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        imageView = findViewById(R.id.image_upload);
-        btnChoose = findViewById(R.id.image_upload);
-        btnUpload = findViewById(R.id.upload_me);
+        //imageView = findViewById(R.id.image_upload);
+        //btnChoose = findViewById(R.id.image_upload);
+        //btnUpload = findViewById(R.id.upload_me);
 
-        btnChoose.setOnClickListener(new View.OnClickListener() {
+        /*btnChoose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 chooseImage(v);
             }
-        });
+        });*/
 
         /*btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -285,7 +285,6 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-
     }
 
 }
