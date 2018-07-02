@@ -46,15 +46,6 @@ public class RegisterActivity extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final String TAG = "EmailPassword";
 
-    FirebaseStorage storage = FirebaseStorage.getInstance();
-    StorageReference storageRef = storage.getReference();
-
-    ImageView imageView;
-    ImageView btnChoose;
-    Button btnUpload;
-    Uri filePath;
-    final int PICK_IMAGE_REQUEST = 71;
-
     public void submitLogin(View v){
         //Views & Stringbuilder
         TextView emailEdit = findViewById(R.id.email_Edit);
@@ -140,8 +131,6 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     });
 
-            //uploadImage(v);
-
             //start new intent, change to Homepage
             startActivity(loggedInIntent);
         }
@@ -151,81 +140,6 @@ public class RegisterActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 100);
         toast.show();
-    }
-
-    private void chooseImage(View v){
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
-                && data != null && data.getData() != null )
-        {
-            filePath = data.getData();
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-                //imageView.setImageBitmap(bitmap);
-                Drawable drawable = new BitmapDrawable(getResources(), bitmap);
-                imageView.setBackgroundDrawable(drawable);
-
-                int h = bitmap.getHeight();
-                int w = bitmap.getWidth();
-                if(h > w){
-                    imageView.getLayoutParams().height = 700;
-                    imageView.getLayoutParams().width = 500;
-                }
-                if(h < w){
-                    imageView.getLayoutParams().height = 500;
-                    imageView.getLayoutParams().width = 700;
-                }
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private void uploadImage(View v){
-        if(filePath != null)
-        {
-            final ProgressDialog progressDialog = new ProgressDialog(this);
-            progressDialog.setTitle("Uploading...");
-            progressDialog.show();
-
-            EditText emailEdit = findViewById(R.id.email_Edit);
-            String email = emailEdit.getText().toString();
-
-            StorageReference ref = storageRef.child("profile_images/" + email);
-            ref.putFile(filePath)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        progressDialog.dismiss();
-                        makeToast("Uploaded");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        progressDialog.dismiss();
-                        makeToast("Failed " + e.getMessage());
-                    }
-                })
-                .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                        double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
-                                .getTotalByteCount());
-                        progressDialog.setMessage("Uploaded "+(int)progress+"%");
-                    }
-                });
-        }
     }
 
     @Override
@@ -252,24 +166,6 @@ public class RegisterActivity extends AppCompatActivity {
         dpDate.init(2000, 0, 1, null);
 
         mAuth = FirebaseAuth.getInstance();
-
-        //imageView = findViewById(R.id.image_upload);
-        //btnChoose = findViewById(R.id.image_upload);
-        //btnUpload = findViewById(R.id.upload_me);
-
-        /*btnChoose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                chooseImage(v);
-            }
-        });*/
-
-        /*btnUpload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                uploadImage(v);
-            }
-        });*/
     }
 
     //Small country autocomplete

@@ -50,7 +50,6 @@ public class EditActivity extends AppCompatActivity {
     EditText mothertongue;
 
     //Views & other vars for imageupload
-    ImageView imageView;
     ImageView btnChoose;
     Button btnUpload;
     Uri filePath;
@@ -64,14 +63,14 @@ public class EditActivity extends AppCompatActivity {
         setProfile();
         mAuth = FirebaseAuth.getInstance();
 
+        //findviews
         fullName = findViewById(R.id.profile_name);
         country = findViewById(R.id.country);
         birthday = findViewById(R.id.birthday);
         mothertongue = findViewById(R.id.mothertongue);
-
-        imageView = findViewById(R.id.profile_pic);
         btnChoose = findViewById(R.id.profile_pic);
         btnUpload = findViewById(R.id.upload);
+
         btnChoose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,17 +104,17 @@ public class EditActivity extends AppCompatActivity {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 //imageView.setImageBitmap(bitmap);
                 Drawable drawable = new BitmapDrawable(getResources(), bitmap);
-                imageView.setBackgroundDrawable(drawable);
+                btnChoose.setBackgroundDrawable(drawable);
 
                 int h = bitmap.getHeight();
                 int w = bitmap.getWidth();
                 if(h > w){
-                    imageView.getLayoutParams().height = 700;
-                    imageView.getLayoutParams().width = 500;
+                    btnChoose.getLayoutParams().height = 700;
+                    btnChoose.getLayoutParams().width = 500;
                 }
                 if(h < w){
-                    imageView.getLayoutParams().height = 500;
-                    imageView.getLayoutParams().width = 700;
+                    btnChoose.getLayoutParams().height = 500;
+                    btnChoose.getLayoutParams().width = 700;
                 }
             }
             catch (IOException e)
@@ -137,28 +136,28 @@ public class EditActivity extends AppCompatActivity {
 
             StorageReference ref = storageRef.child("profile_images/" + email);
             ref.putFile(filePath)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            progressDialog.dismiss();
-                            makeToast("Uploaded");
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            progressDialog.dismiss();
-                            makeToast("Failed " + e.getMessage());
-                        }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
-                                    .getTotalByteCount());
-                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
-                        }
-                    });
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        progressDialog.dismiss();
+                        makeToast("Uploaded");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        progressDialog.dismiss();
+                        makeToast("Failed " + e.getMessage());
+                    }
+                })
+                .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                        double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
+                                .getTotalByteCount());
+                        progressDialog.setMessage("Uploaded "+(int)progress+"%");
+                    }
+                });
         }
     }
 
@@ -217,25 +216,25 @@ public class EditActivity extends AppCompatActivity {
         final String editMothertongue = mothertongue.getText().toString().toLowerCase();
 
         currentUser
-                .update(
-                        "country", editCountry,
-                        "birthday", editBirthday,
-                        "mothertongue", editMothertongue)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully updated!");
-                        chooseImage(v);
-                        showProfile(editName, editCountry, editBirthday, editMothertongue, true);
-                        makeToast("Your profile was successfully updated!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error updating document", e);
-                    }
-                });
+            .update(
+                    "country", editCountry,
+                    "birthday", editBirthday,
+                    "mothertongue", editMothertongue)
+            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.d(TAG, "DocumentSnapshot successfully updated!");
+                    chooseImage(v);
+                    showProfile(editName, editCountry, editBirthday, editMothertongue, true);
+                    makeToast("Your profile was successfully updated!");
+                }
+            })
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.w(TAG, "Error updating document", e);
+                }
+            });
     }
 
     public void makeToast(String toastText){
