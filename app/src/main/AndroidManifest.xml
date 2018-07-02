@@ -26,7 +26,6 @@
         <activity android:name=".JourneyActivity" />
         <activity android:name=".SearchActivity" />
         <activity android:name=".EditActivity" />
-        <activity android:name=".ImageActivity" />
     </application>
 
 </manifest>

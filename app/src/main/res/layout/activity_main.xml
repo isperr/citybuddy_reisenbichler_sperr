@@ -99,11 +99,5 @@
             </RelativeLayout>
         </RelativeLayout>
 
-        <Button
-            android:id="@+id/md5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="MD5 hash hopefully"
-            android:onClick="test"/>
     </LinearLayout>
 </ScrollView>

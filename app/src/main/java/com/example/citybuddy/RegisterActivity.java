@@ -36,6 +36,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -95,7 +97,7 @@ public class RegisterActivity extends AppCompatActivity {
             user.put("first_name", first_n);
             user.put("last_name", last_n);
             user.put("email", email);
-            user.put("password", password);
+            user.put("password", hashPassword(password));
             user.put("country", country);
             user.put("mothertongue", language);
             user.put("birthday", birthday.toString());
@@ -119,14 +121,16 @@ public class RegisterActivity extends AppCompatActivity {
 
             //ADD USER TO FIREBASE - AUTHENTICATION
             Log.d(TAG, "createAccount:" + email);
+
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (!task.isSuccessful()) {
-                                makeToast("Authentication failed.");
-                            } else {
+                            if (task.isSuccessful()) {
+                                Log.d(TAG, "createUserWithEmail:success");
                                 finish();
+                            } else {
+                                makeToast("Authentication failed.");
                             }
                         }
                     });
@@ -181,6 +185,23 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
+    }
+
+    public String hashPassword(String password){
+        String hashedPassword = password;
+
+        try{
+            MessageDigest m = MessageDigest.getInstance("MD5");
+            m.update(password.getBytes(), 0, password.length());
+            BigInteger i = new BigInteger(1,m.digest());
+            hashedPassword = String.format("%1$032x", i);
+
+
+        }catch(Exception e){
+            Log.d("MD5Hash","Passwordhash failed");
+        }
+        return hashedPassword;
+
     }
 
 }

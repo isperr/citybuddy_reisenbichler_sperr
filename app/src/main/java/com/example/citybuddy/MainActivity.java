@@ -28,30 +28,4 @@ public class MainActivity extends AppCompatActivity {
         startActivity(signInIntent);
     }
 
-    public void test(View v){
-        String yourString = "geheim";
-
-        try{
-            /*byte[] bytesOfMessage = yourString.getBytes("UTF-8");
-
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] thedigest = md.digest(bytesOfMessage);
-
-            String value = new String(thedigest, "UTF-8");*/
-
-            MessageDigest m = MessageDigest.getInstance("MD5");
-            m.update(yourString.getBytes(), 0, yourString.length());
-            BigInteger i = new BigInteger(1,m.digest());
-
-
-            Toast toast = Toast.makeText(getApplicationContext(), "GEHT: " + String.format("%1$032x", i), Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 100);
-            toast.show();
-        }catch(Exception e){
-            Toast toast = Toast.makeText(getApplicationContext(), "Fehler: " + e.getMessage(), Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 100);
-            toast.show();
-        }
-
-    }
 }
