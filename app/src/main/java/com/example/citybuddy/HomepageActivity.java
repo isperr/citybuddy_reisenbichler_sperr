@@ -93,6 +93,10 @@ public class HomepageActivity extends AppCompatActivity {
     }
 
     public void createUserLayout(){
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        final String useremail = user.getEmail();
+
+
 
         db.collection("users")
                 .get()
@@ -103,14 +107,20 @@ public class HomepageActivity extends AppCompatActivity {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d(TAG, document.getId() + " => " + document.get("first_name") + document.get("country"));
 
-                                final String fullName = document.get("first_name").toString() + " " +document.get("last_name").toString();
-                                final String homeCountry = document.get("country").toString();
-                                final String birthday = document.get("birthday").toString();
-                                final String mothertongue = document.get("mothertongue").toString();
+                                String email = document.get("email").toString();
 
-                                //find Layout
-                                LinearLayout all_buddies = (LinearLayout) findViewById(R.id.buddy_layout);
-                                createUsersView(all_buddies, fullName, homeCountry, birthday, mothertongue);
+
+                                if(!email.equals(useremail)){
+                                    final String fullName = document.get("first_name").toString() + " " +document.get("last_name").toString();
+                                    final String homeCountry = document.get("country").toString();
+                                    final String birthday = document.get("birthday").toString();
+                                    final String mothertongue = document.get("mothertongue").toString();
+
+                                    //find Layout
+                                    LinearLayout all_buddies = (LinearLayout) findViewById(R.id.buddy_layout);
+                                    createUsersView(all_buddies, fullName, homeCountry, birthday, mothertongue);
+                                }
+
 
                             }
                         } else {
@@ -131,7 +141,7 @@ public class HomepageActivity extends AppCompatActivity {
         //Add name TextViews for each user
         TextView userNameTextView = new TextView(getBaseContext());
         userNameTextView.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-        userNameTextView.setText(fullName);
+        userNameTextView.setText(firstLetterUpper(fullName));
         userNameTextView.setTextColor(getResources().getColor(R.color.blackColor));
         userNameTextView.setTextSize(16);
         linearLayout.addView(userNameTextView);
@@ -139,7 +149,7 @@ public class HomepageActivity extends AppCompatActivity {
         //Add name TextViews for each user
         TextView userCountryTextView = new TextView(getBaseContext());
         userCountryTextView.setLayoutParams(new LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-        userCountryTextView.setText("Country: " + homeCountry);
+        userCountryTextView.setText("Country: " + firstLetterUpper(homeCountry));
         userCountryTextView.setTextColor(getResources().getColor(R.color.blackColor));
         userCountryTextView.setTextSize(16);
         linearLayout.addView(userCountryTextView);
@@ -201,5 +211,16 @@ public class HomepageActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private String firstLetterUpper(String input){
+        String s = "";
+        String current = "";
+        String[] words = input.split("\\s+");
+        for(int i = 0; i < words.length; i++){
+            current = words[i].substring(0, 1).toUpperCase() + words[i].substring(1);
+            s += current + " ";
+        }
+        return s;
     }
 }

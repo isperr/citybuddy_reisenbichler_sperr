@@ -90,16 +90,6 @@ public class EditActivity extends AppCompatActivity {
         startActivity(profileIntent);
     }
 
-    private String firstLetterUpper(String input){
-        String s = "";
-        String current = "";
-        String[] words = input.split("\\s+");
-        for(int i = 0; i < words.length; i++){
-            current = words[i].substring(0, 1).toUpperCase() + words[i].substring(1);
-            s += current + " ";
-        }
-        return s;
-    }
 
     public void saveEdit(View v){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
