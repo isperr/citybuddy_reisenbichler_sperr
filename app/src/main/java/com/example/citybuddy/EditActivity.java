@@ -3,6 +3,7 @@ package com.example.citybuddy;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -161,6 +162,50 @@ public class EditActivity extends AppCompatActivity {
         }
     }
 
+    public void downloadPic(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String email = user.getEmail();
+
+        StorageReference imgRef = storageRef.child("profile_images/" + email);
+
+        final long ONE_MEGABYTE = 1024 * 1024 * 5;
+        imgRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                setProfilePic(bmp);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Log.d("Picture", "Failure => " + exception.getMessage());
+            }
+        });
+    }
+
+    public void setProfilePic(Bitmap bitmap){
+        try {
+            Drawable drawable = new BitmapDrawable(getResources(), bitmap);
+            btnChoose.setBackgroundDrawable(drawable);
+            makeToast("Click on the image to upload or change your profile pic");
+
+            int h = bitmap.getHeight();
+            int w = bitmap.getWidth();
+            if(h > w){
+                btnChoose.getLayoutParams().height = 700;
+                btnChoose.getLayoutParams().width = 500;
+            }
+            if(h < w){
+                btnChoose.getLayoutParams().height = 500;
+                btnChoose.getLayoutParams().width = 700;
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
     public void setProfile(){
         TextView fullName = findViewById(R.id.profile_name);
         EditText country = findViewById(R.id.country);
@@ -177,17 +222,13 @@ public class EditActivity extends AppCompatActivity {
             String profileBirthday = intent.getStringExtra("birthday");
             String profileMothertongue = intent.getStringExtra("mothertongue");
             Boolean personal = intent.getBooleanExtra("personal", false);
-            if(personal){
-                makeToast("Edit your profile here!");
-            }else{
-                Button editButton = findViewById(R.id.edit_button);
-                editButton.setVisibility(View.GONE);
-            }
 
             fullName.setText(String.valueOf(profileName));
             country.setText(String.valueOf(profileCountry));
             birthday.setText(String.valueOf(profileBirthday));
             mothertongue.setText(String.valueOf(profileMothertongue));
+
+            downloadPic();
         }
     }
 
