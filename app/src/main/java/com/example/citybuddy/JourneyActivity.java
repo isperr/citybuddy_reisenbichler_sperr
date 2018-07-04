@@ -1,5 +1,6 @@
 package com.example.citybuddy;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,19 +26,24 @@ public class JourneyActivity extends AppCompatActivity {
     private static final String TAG = "Journeys";
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_journey);
 
         showJourneys();
+
+    }
+
+    public void newJourney(View v){
+        Intent createJourneyIntent = new Intent(this, CreateJourneyActivity.class);
+        startActivity(createJourneyIntent);
     }
 
     public void showJourneys(){
 
         TextView heading = (TextView) findViewById(R.id.all_journeys);
-        String journeyHeading = heading.toString();
+        String journeyHeading = "";
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -47,17 +54,18 @@ public class JourneyActivity extends AppCompatActivity {
         else{
             Boolean personal = intent.getBooleanExtra("personal", false);
             String email = intent.getStringExtra("user_email");
-            String name = firstLetterUpper(intent.getStringExtra("full_name"));
 
-
-            if(personal){
-                journeyHeading = journeyHeading + "created by you";
+            if(!personal){
+                String name = firstLetterUpper(intent.getStringExtra("full_name"));
+                journeyHeading = " created by " + name;
+                Button journeyButton = findViewById(R.id.journey_button);
+                journeyButton.setVisibility(View.GONE);
             }
             else{
-                journeyHeading = journeyHeading + "created by " + name;
+                journeyHeading = " created by you";
             }
 
-            heading.setText(journeyHeading);
+            heading.append(journeyHeading);
 
             getJourneys(email);
         }

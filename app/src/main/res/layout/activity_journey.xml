@@ -36,7 +36,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@color/darkBlueColor"
-                android:layout_marginBottom="16sp"/>
+                android:layout_marginBottom="16dp"/>
+
+            <Button
+                android:id="@+id/journey_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/new_journey"
+                android:textAllCaps="false"
+                android:background="@color/darkBlueColor"
+                android:textColor="@color/whiteColor"
+                android:onClick="newJourney"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp"/>
 
             <LinearLayout
                 android:id="@+id/journey_layout"

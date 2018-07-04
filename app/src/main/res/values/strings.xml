@@ -55,6 +55,7 @@
     <string name="arr">Arrival</string>
     <string name="dep">Departure</string>
     <string name="no_journeys">Sorry, there are no journeys.</string>
+    <string name="new_journey">Click here to create a new journey</string>
 
     <string name="all_journeys">These are all journeys</string>
     <string name="no_res">Sorry, no results found for this search!</string>

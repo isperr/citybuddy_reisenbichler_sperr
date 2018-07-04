@@ -25,9 +25,6 @@ import java.util.Map;
 public class CreateJourneyActivity extends AppCompatActivity {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    DatePicker dpArrDate = (DatePicker) findViewById(R.id.arr_calender);
-    DatePicker dpDepDate = (DatePicker) findViewById(R.id.dep_calender);
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +34,7 @@ public class CreateJourneyActivity extends AppCompatActivity {
         ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_dropdown_item_1line, COUNTRIES);
         AutoCompleteTextView countryTextView = (AutoCompleteTextView)
-                findViewById(R.id.country_autocomplete);
+                findViewById(R.id.destination_autocomplete);
         countryTextView.setAdapter(countryAdapter);
     }
 
@@ -48,6 +45,10 @@ public class CreateJourneyActivity extends AppCompatActivity {
     };
 
     public void submitJourney(View v){
+
+        DatePicker dpArrDate = (DatePicker) findViewById(R.id.arr_calender);
+        DatePicker dpDepDate = (DatePicker) findViewById(R.id.dep_calender);
+
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String email = user.getEmail();
@@ -86,8 +87,10 @@ public class CreateJourneyActivity extends AppCompatActivity {
             journey.put("arrival", arrival.toString());
             journey.put("departure", departure.toString());
 
+            String docID = email.substring(0,4) + destination;
+
             db.collection("journeys")
-                    .document(email)
+                    .document(docID)
                     .set(journey)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -101,8 +104,9 @@ public class CreateJourneyActivity extends AppCompatActivity {
                     Log.w("DocSnippets", "Error adding document", e);
                 }
             });
-        }
 
+            startActivity(journeyIntent);
+        }
     }
 
     public void makeToast(String toastText){

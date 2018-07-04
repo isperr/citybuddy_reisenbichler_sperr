@@ -56,7 +56,7 @@ public class ProfileActivity extends AppCompatActivity {
         TextView fullName = findViewById(R.id.profile_name);
         TextView country = findViewById(R.id.country);
         TextView birthday = findViewById(R.id.birthday);
-        TextView mothertongue = findViewById(R.id.mothertongue);
+        TextView motherTongue = findViewById(R.id.mothertongue);
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -77,7 +77,7 @@ public class ProfileActivity extends AppCompatActivity {
             fullName.setText(String.valueOf(profileName));
             country.setText(String.valueOf(profileCountry));
             birthday.setText(String.valueOf(profileBirthday));
-            mothertongue.setText(String.valueOf(profileMothertongue));
+            motherTongue.setText(String.valueOf(profileMothertongue));
 
 
             downloadPic();
