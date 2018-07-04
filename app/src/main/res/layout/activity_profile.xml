@@ -138,18 +138,36 @@
                 android:textSize="16sp"
                 android:layout_below="@id/mothertongue"/>
 
-            <Button
-                android:id="@+id/edit_button"
+            <LinearLayout
+                android:layout_below="@id/journey_button"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Edit"
-                android:textAllCaps="false"
-                android:background="@color/darkBlueColor"
-                android:textColor="@color/whiteColor"
-                android:onClick="profileEdit"
-                android:textSize="16sp"
-                android:layout_marginTop="10dp"
-                android:layout_below="@id/journey_button"/>
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/contact_button"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="false"
+                    android:background="@color/darkBlueColor"
+                    android:textColor="@color/whiteColor"
+                    android:text="@string/contact"
+                    android:onClick="contactFunction"
+                    android:textSize="16sp"
+                    android:layout_marginTop="10dp"/>
+
+                <Button
+                    android:id="@+id/edit_button"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="false"
+                    android:background="@color/darkBlueColor"
+                    android:textColor="@color/whiteColor"
+                    android:onClick="profileEdit"
+                    android:textSize="16sp"
+                    android:text="@string/edit"
+                    android:layout_marginTop="10dp" />
+            </LinearLayout>
 
 
         </RelativeLayout>

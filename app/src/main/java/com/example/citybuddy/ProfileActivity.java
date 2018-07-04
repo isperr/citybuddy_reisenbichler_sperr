@@ -29,6 +29,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import de.cketti.mailto.EmailIntentBuilder;
 
 import org.w3c.dom.Text;
 
@@ -52,6 +53,7 @@ public class ProfileActivity extends AppCompatActivity {
         profilePic = findViewById(R.id.profile_pic);
     }
 
+
     public void setProfile(){
         TextView fullName = findViewById(R.id.profile_name);
         TextView country = findViewById(R.id.country);
@@ -69,9 +71,14 @@ public class ProfileActivity extends AppCompatActivity {
             String profileBirthday = intent.getStringExtra("birthday");
             String profileMothertongue = firstLetterUpper(intent.getStringExtra("mothertongue"));
             Boolean personal = intent.getBooleanExtra("personal", false);
+            Button editButton = findViewById(R.id.edit_button);
+            Button contactButton = findViewById(R.id.contact_button);
+
             if(!personal){
-                Button editButton = findViewById(R.id.edit_button);
                 editButton.setVisibility(View.GONE);
+            }
+            else{
+                contactButton.setVisibility(View.GONE);
             }
 
             fullName.setText(String.valueOf(profileName));
@@ -106,12 +113,12 @@ public class ProfileActivity extends AppCompatActivity {
         TextView fullName = findViewById(R.id.profile_name);
         TextView country = findViewById(R.id.country);
         TextView birthday = findViewById(R.id.birthday);
-        TextView mothertongue = findViewById(R.id.mothertongue);
+        TextView motherTongue = findViewById(R.id.mothertongue);
 
         String editName = fullName.getText().toString();
         String editCountry = country.getText().toString();
         String editBirthday = birthday.getText().toString();
-        String editMothertongue = mothertongue.getText().toString();
+        String editMothertongue = motherTongue.getText().toString();
 
         showProfile(editName, editCountry, editBirthday, editMothertongue, true);
     }
@@ -191,6 +198,21 @@ public class ProfileActivity extends AppCompatActivity {
             bundle.putBoolean("personal", personal);
             journeyIntent.putExtras(bundle);
             startActivity(journeyIntent);
+        }
+    }
+
+    public void contactFunction(View v){
+
+        Intent intent = getIntent();
+        String mail = intent.getStringExtra("user_email");
+
+        boolean success = EmailIntentBuilder.from(this)
+                .to(mail)
+                .subject("Request from CityBuddy")
+                .start();
+
+        if (!success) {
+            makeToast("Error");
         }
     }
 }

@@ -41,6 +41,8 @@
 
     <string name="profile">Profile</string>
     <string name="your_profile">Want to look at your profile?</string>
+    <string name="contact">Contact me!</string>
+    <string name="edit">Edit your profile</string>
     <string name="searchbud">Search for a Buddy here</string>
     <string name="bycountry">by country</string>
     <string name="bylang">by language</string>

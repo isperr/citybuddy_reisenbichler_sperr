@@ -210,7 +210,7 @@ public class EditActivity extends AppCompatActivity {
         TextView fullName = findViewById(R.id.profile_name);
         EditText country = findViewById(R.id.country);
         EditText birthday = findViewById(R.id.birthday);
-        EditText mothertongue = findViewById(R.id.mothertongue);
+        EditText motherTongue = findViewById(R.id.mothertongue);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
 
@@ -226,7 +226,7 @@ public class EditActivity extends AppCompatActivity {
             fullName.setText(String.valueOf(profileName));
             country.setText(String.valueOf(profileCountry));
             birthday.setText(String.valueOf(profileBirthday));
-            mothertongue.setText(String.valueOf(profileMothertongue));
+            motherTongue.setText(String.valueOf(profileMothertongue));
 
             downloadPic();
         }
