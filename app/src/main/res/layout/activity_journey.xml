@@ -1,64 +1,89 @@
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/scrollview"
-    tools:context=".MainActivity">
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
 
-    <LinearLayout
-        android:id="@+id/journey_area"
+    <include
+        layout="@layout/app_bar_navigation"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/beigeColor"
-        android:layout_margin="16dp"
-        android:padding="16sp"
-        android:orientation="vertical">
+        android:layout_height="match_parent" />
 
-        <TextView
-            android:id="@+id/all_journeys"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/all_journeys"
-            android:textSize="21sp"
-            android:textColor="@color/blackColor"
-            android:textStyle="bold"/>
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header_navigation"
+        app:menu="@menu/activity_navigation_drawer" />
+
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollview"
+        tools:context=".MainActivity">
 
         <LinearLayout
+            android:id="@+id/journey_area"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:id="@+id/list_of_journeys"
-            android:layout_marginBottom="16sp"
-            android:layout_marginTop="16sp">
+            android:background="@color/beigeColor"
+            android:layout_margin="16dp"
+            android:padding="16sp"
+            android:orientation="vertical">
 
-            <View
+            <TextView
+                android:id="@+id/all_journeys"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@color/darkBlueColor"
-                android:layout_marginBottom="16dp"/>
-
-            <Button
-                android:id="@+id/journey_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/new_journey"
-                android:textAllCaps="false"
-                android:background="@color/darkBlueColor"
-                android:textColor="@color/whiteColor"
-                android:onClick="newJourney"
-                android:layout_gravity="center"
-                android:layout_marginBottom="16dp"/>
+                android:layout_height="match_parent"
+                android:text="@string/all_journeys"
+                android:textSize="21sp"
+                android:textColor="@color/blackColor"
+                android:textStyle="bold"/>
 
             <LinearLayout
-                android:id="@+id/journey_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:id="@+id/list_of_journeys"
+                android:layout_marginBottom="16sp"
+                android:layout_marginTop="16sp">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/darkBlueColor"
+                    android:layout_marginBottom="16dp"/>
+
+                <Button
+                    android:id="@+id/journey_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/new_journey"
+                    android:textAllCaps="false"
+                    android:background="@color/darkBlueColor"
+                    android:textColor="@color/whiteColor"
+                    android:onClick="newJourney"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="16dp"/>
+
+                <LinearLayout
+                    android:id="@+id/journey_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                </LinearLayout>
 
             </LinearLayout>
 
         </LinearLayout>
-
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+</android.support.v4.widget.DrawerLayout>

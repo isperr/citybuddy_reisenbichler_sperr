@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">CityBuddy</string>
+    <string name="homePage">Homepage</string>
+    <string name="profilePage">Profile</string>
+    <string name="journeysPage">Journeys</string>
 
     <string name="find">Find a buddy wherever you travel!</string>
     <string name="join">Join us now!</string>
@@ -62,4 +65,11 @@
     <string name="all_journeys">These are all journeys</string>
     <string name="no_res">Sorry, no results found for this search!</string>
     <string name="nothing">Sorry, but you did not enter anything or did not check a parameter you want to search by.</string>
+    <string name="title_activity_navigation">NavigationActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
 </resources>

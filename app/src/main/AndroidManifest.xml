@@ -20,13 +20,25 @@
             </intent-filter>
         </activity>
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".ProfileActivity" />
-        <activity android:name=".SignInActivity" />
-        <activity android:name=".HomepageActivity" />
+        <activity
+            android:name=".ProfileActivity"
+            android:label="@string/profilePage"
+            android:theme="@style/AppTheme.NoActionBar"></activity>        <activity android:name=".SignInActivity" />
+        <activity
+            android:name=".HomepageActivity"
+            android:label="@string/homePage"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".CreateJourneyActivity" />
         <activity android:name=".SearchActivity" />
         <activity android:name=".EditActivity" />
-        <activity android:name=".JourneyActivity"></activity>
+        <activity
+            android:name=".JourneyActivity"
+            android:label="@string/journeysPage"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".NavigationActivity"
+            android:label="@string/title_activity_navigation"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
