@@ -54,7 +54,9 @@
     <string name="journey">Create journey</string>
     <string name="arr">Arrival</string>
     <string name="dep">Departure</string>
+    <string name="no_journeys">Sorry, there are no journeys.</string>
 
+    <string name="all_journeys">These are all journeys</string>
     <string name="no_res">Sorry, no results found for this search!</string>
     <string name="nothing">Sorry, but you did not enter anything or did not check a parameter you want to search by.</string>
 </resources>

@@ -22,7 +22,7 @@
 
 
             <RelativeLayout
-                android:id="@+id/searcg_area"
+                android:id="@+id/search_area"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/beigeColor"
@@ -96,7 +96,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/beigeColor"
-                android:layout_below="@id/searcg_area"
+                android:layout_below="@id/search_area"
                 android:layout_margin="16dp"
                 android:padding="16sp"
                 android:orientation="vertical">

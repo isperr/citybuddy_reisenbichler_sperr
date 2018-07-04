@@ -1,9 +1,52 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".JourneyActivity">
+    android:id="@+id/scrollview"
+    tools:context=".MainActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:id="@+id/journey_area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/beigeColor"
+        android:layout_margin="16dp"
+        android:padding="16sp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/all_journeys"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/all_journeys"
+            android:textSize="21sp"
+            android:textColor="@color/blackColor"
+            android:textStyle="bold"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/list_of_journeys"
+            android:layout_marginBottom="16sp"
+            android:layout_marginTop="16sp">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/darkBlueColor"
+                android:layout_marginBottom="16sp"/>
+
+            <LinearLayout
+                android:id="@+id/journey_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

@@ -135,7 +135,7 @@ public class HomepageActivity extends AppCompatActivity {
         LinearLayout linearLayout = new LinearLayout(getBaseContext());
         linearLayout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
                 LayoutParams.MATCH_PARENT));
-        linearLayout.setOrientation(LinearLayout.VERTICAL);;
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
 
         //Add name TextViews for each user
         TextView userNameTextView = new TextView(getBaseContext());

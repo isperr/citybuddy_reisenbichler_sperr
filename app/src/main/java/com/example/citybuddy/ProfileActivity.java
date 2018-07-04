@@ -182,10 +182,12 @@ public class ProfileActivity extends AppCompatActivity {
 
             Boolean personal = intent.getBooleanExtra("personal", false);
             String email = intent.getStringExtra("user_email");
+            String profileName = firstLetterUpper(intent.getStringExtra("full_name"));
 
             Intent journeyIntent = new Intent(this, JourneyActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString("user_email", email);
+            bundle.putString("full_name", profileName);
             bundle.putBoolean("personal", personal);
             journeyIntent.putExtras(bundle);
             startActivity(journeyIntent);

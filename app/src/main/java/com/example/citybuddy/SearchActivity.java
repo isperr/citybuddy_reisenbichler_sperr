@@ -123,7 +123,7 @@ public class SearchActivity extends AppCompatActivity {
         LinearLayout linearLayout = new LinearLayout(getBaseContext());
         linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT));
-        linearLayout.setOrientation(LinearLayout.VERTICAL);;
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
 
         //Add name TextViews for each user
         TextView userNameTextView = new TextView(getBaseContext());
