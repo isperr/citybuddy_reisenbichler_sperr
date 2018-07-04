@@ -232,9 +232,10 @@ public class EditActivity extends AppCompatActivity {
         }
     }
 
-    public void showProfile(String fullName, String homeCountry, String birthday, String mothertongue, Boolean personal){
+    public void showProfile(String email, String fullName, String homeCountry, String birthday, String mothertongue, Boolean personal){
         Intent profileIntent = new Intent(this, ProfileActivity.class);
         Bundle bundle = new Bundle();
+        bundle.putString("user_email", email);
         bundle.putString("full_name", fullName);
         bundle.putString("country", homeCountry);
         bundle.putString("birthday", birthday);
@@ -247,7 +248,7 @@ public class EditActivity extends AppCompatActivity {
 
     public void saveEdit(final View v){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String userEmail = user.getEmail();
+        final String userEmail = user.getEmail();
 
         DocumentReference currentUser = db.collection("users").document(userEmail);
 
@@ -266,7 +267,7 @@ public class EditActivity extends AppCompatActivity {
                 public void onSuccess(Void aVoid) {
                     Log.d(TAG, "DocumentSnapshot successfully updated!");
                     chooseImage(v);
-                    showProfile(editName, editCountry, editBirthday, editMothertongue, true);
+                    showProfile(userEmail, editName, editCountry, editBirthday, editMothertongue, true);
                     makeToast("Your profile was successfully updated!");
                 }
             })

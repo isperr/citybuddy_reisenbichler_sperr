@@ -49,6 +49,12 @@
     <string name="save">Save changes</string>
     <string name="upload">Upload</string>
 
+    <string name="journey_information">Enter the details about your journey here!</string>
+    <string name="dest_hint">Enter the country of your destination ...</string>
+    <string name="journey">Create journey</string>
+    <string name="arr">Arrival</string>
+    <string name="dep">Departure</string>
+
     <string name="no_res">Sorry, no results found for this search!</string>
     <string name="nothing">Sorry, but you did not enter anything or did not check a parameter you want to search by.</string>
 </resources>

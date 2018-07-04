@@ -1,0 +1,97 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/scrollview"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/create_journey_form"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/beigeColor"
+            android:layout_margin="16dp"
+            android:padding="16sp">
+
+            <TextView
+                android:id="@+id/journey_heading"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/journey_information"
+                android:textSize="22sp"
+                android:textColor="@color/blackColor"
+                android:layout_marginBottom="16sp"/>
+
+            <TextView
+                android:id="@+id/destination"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/country"
+                android:textColor="@color/blackColor"
+                android:layout_below="@id/journey_heading" />
+
+            <AutoCompleteTextView
+                android:id="@+id/destination_autocomplete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/dest_hint"
+                android:textSize="12sp"
+                android:layout_below="@id/destination"/>
+
+            <TextView
+                android:id="@+id/arrival"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/arr"
+                android:textColor="@color/blackColor"
+                android:layout_below="@id/destination_autocomplete" />
+
+            <DatePicker
+                android:id="@+id/arr_calender"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_below="@id/arrival"
+                android:datePickerMode="spinner"
+                android:calendarViewShown="false" />
+
+            <TextView
+                android:id="@+id/departure"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/dep"
+                android:textColor="@color/blackColor"
+                android:layout_below="@id/arr_calender" />
+
+            <DatePicker
+                android:id="@+id/dep_calender"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_below="@id/departure"
+                android:datePickerMode="spinner"
+                android:calendarViewShown="false" />
+
+            <Button
+                android:id="@+id/button_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:onClick="submitJourney"
+                android:text="@string/journey"
+                android:textColor="@color/whiteColor"
+                android:background="@color/darkBlueColor"
+                android:layout_gravity="center"
+                android:textSize="20sp"
+                android:layout_below="@id/dep_calender"
+                android:textAllCaps="false"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</ScrollView>

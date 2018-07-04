@@ -23,9 +23,10 @@
         <activity android:name=".ProfileActivity" />
         <activity android:name=".SignInActivity" />
         <activity android:name=".HomepageActivity" />
-        <activity android:name=".JourneyActivity" />
+        <activity android:name=".CreateJourneyActivity" />
         <activity android:name=".SearchActivity" />
         <activity android:name=".EditActivity" />
+        <activity android:name=".JourneyActivity"></activity>
     </application>
 
 </manifest>

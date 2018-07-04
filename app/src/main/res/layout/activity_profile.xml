@@ -127,6 +127,18 @@
                 android:layout_marginBottom="16sp"/>
 
             <Button
+                android:id="@+id/journey_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Journeys"
+                android:textAllCaps="false"
+                android:background="@drawable/border"
+                android:textColor="@color/blackColor"
+                android:onClick="showJourneys"
+                android:textSize="16sp"
+                android:layout_below="@id/mothertongue"/>
+
+            <Button
                 android:id="@+id/edit_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -136,7 +148,9 @@
                 android:textColor="@color/whiteColor"
                 android:onClick="profileEdit"
                 android:textSize="16sp"
-                android:layout_below="@id/mothertongue"/>
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/journey_button"/>
+
 
         </RelativeLayout>
 

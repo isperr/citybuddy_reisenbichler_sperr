@@ -1,12 +1,6 @@
 package com.example.citybuddy;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,10 +9,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,14 +19,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
-import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.util.HashMap;
@@ -55,7 +40,7 @@ public class RegisterActivity extends AppCompatActivity {
         TextView passwordEdit2 = findViewById(R.id.password_conf_Edit);
         TextView first_n_Edit = findViewById(R.id.first_n_Edit);
         TextView last_n_Edit = findViewById(R.id.last_n_Edit);
-        TextView countryEdit = findViewById(R.id.city_autocomplete);
+        TextView countryEdit = findViewById(R.id.country_autocomplete);
         TextView languageEdit = findViewById(R.id.language_autocomplete);
 
         StringBuilder birthday = new StringBuilder();
@@ -156,7 +141,7 @@ public class RegisterActivity extends AppCompatActivity {
         ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_dropdown_item_1line, COUNTRIES);
         AutoCompleteTextView countryTextView = (AutoCompleteTextView)
-                findViewById(R.id.city_autocomplete);
+                findViewById(R.id.country_autocomplete);
         countryTextView.setAdapter(countryAdapter);
 
         ArrayAdapter<String> languageAdapter = new ArrayAdapter<String>(this,

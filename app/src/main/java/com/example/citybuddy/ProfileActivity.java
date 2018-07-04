@@ -170,4 +170,25 @@ public class ProfileActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    public void showJourneys(View v){
+
+        Intent intent = getIntent();
+        Bundle profileBundle = intent.getExtras();
+
+        if(profileBundle.isEmpty()){
+            makeToast("No journeys available.");
+        }else{
+
+            Boolean personal = intent.getBooleanExtra("personal", false);
+            String email = intent.getStringExtra("user_email");
+
+            Intent journeyIntent = new Intent(this, JourneyActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("user_email", email);
+            bundle.putBoolean("personal", personal);
+            journeyIntent.putExtras(bundle);
+            startActivity(journeyIntent);
+        }
+    }
 }

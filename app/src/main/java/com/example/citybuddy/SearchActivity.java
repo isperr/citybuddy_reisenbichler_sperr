@@ -31,9 +31,10 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
     }
 
-    public void showProfile(View v, String fullName, String homeCountry, String birthday, Boolean personal){
+    public void showProfile(View v, String email, String fullName, String homeCountry, String birthday, Boolean personal){
         Intent profileIntent = new Intent(this, ProfileActivity.class);
         Bundle bundle = new Bundle();
+        bundle.putString("user_email", email);
         bundle.putString("full_name", fullName);
         bundle.putString("country", homeCountry);
         bundle.putString("birthday", birthday);
@@ -90,14 +91,14 @@ public class SearchActivity extends AppCompatActivity {
                                     counter = counter + 1;
 
                                     Log.d(TAG, document.getId() + " => " + document.get("first_name") + document.get("country"));
-                                    
+                                    final String email = document.get("email").toString();
                                     final String fullName = document.get("first_name").toString() + " " +document.get("last_name").toString();
                                     final String homeCountry = document.get("country").toString();
                                     final String birthday = document.get("birthday").toString();
 
                                     //find Layout
                                     LinearLayout all_buddies = (LinearLayout) findViewById(R.id.search_results);
-                                    createResultViews(all_buddies, fullName, homeCountry, birthday);
+                                    createResultViews(all_buddies, email, fullName, homeCountry, birthday);
                                 }
 
                                 if(counter == 0){
@@ -117,7 +118,7 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
-    public void createResultViews(LinearLayout baseLayout, final String fullName, final String homeCountry, final String birthday){
+    public void createResultViews(LinearLayout baseLayout, final String email, final String fullName, final String homeCountry, final String birthday){
         //create View for Each User
         LinearLayout linearLayout = new LinearLayout(getBaseContext());
         linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
@@ -127,7 +128,7 @@ public class SearchActivity extends AppCompatActivity {
         //Add name TextViews for each user
         TextView userNameTextView = new TextView(getBaseContext());
         userNameTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-        userNameTextView.setText(fullName);
+        userNameTextView.setText(firstLetterUpper(fullName));
         userNameTextView.setTextColor(getResources().getColor(R.color.blackColor));
         userNameTextView.setTextSize(16);
         linearLayout.addView(userNameTextView);
@@ -135,7 +136,7 @@ public class SearchActivity extends AppCompatActivity {
         //Add name TextViews for each user
         TextView userCountryTextView = new TextView(getBaseContext());
         userCountryTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-        userCountryTextView.setText("Country: " + homeCountry);
+        userCountryTextView.setText("Country: " + firstLetterUpper(homeCountry));
         userCountryTextView.setTextColor(getResources().getColor(R.color.blackColor));
         userCountryTextView.setTextSize(16);
         linearLayout.addView(userCountryTextView);
@@ -149,7 +150,7 @@ public class SearchActivity extends AppCompatActivity {
         showProfileTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showProfile(view, fullName, homeCountry, birthday, false);
+                showProfile(view, email, fullName, homeCountry, birthday, false);
             }
         });
         linearLayout.addView(showProfileTextView);
@@ -181,5 +182,16 @@ public class SearchActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_LONG);
         toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 100);
         toast.show();
+    }
+
+    private String firstLetterUpper(String input){
+        String s = "";
+        String current = "";
+        String[] words = input.split("\\s+");
+        for(int i = 0; i < words.length; i++){
+            current = words[i].substring(0, 1).toUpperCase() + words[i].substring(1);
+            s += current + " ";
+        }
+        return s;
     }
 }

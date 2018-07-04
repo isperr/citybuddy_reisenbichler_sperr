@@ -61,13 +61,14 @@ public class HomepageActivity extends AppCompatActivity {
         }
     }
 
-    public void showProfile(String fullName, String homeCountry, String birthday, String mothertongue, Boolean personal){
+    public void showProfile(String email, String fullName, String homeCountry, String birthday, String motherTongue, Boolean personal){
         Intent profileIntent = new Intent(this, ProfileActivity.class);
         Bundle bundle = new Bundle();
+        bundle.putString("user_email", email);
         bundle.putString("full_name", fullName);
         bundle.putString("country", homeCountry);
         bundle.putString("birthday", birthday);
-        bundle.putString("mothertongue", mothertongue);
+        bundle.putString("mothertongue", motherTongue);
         bundle.putBoolean("personal", personal);
         profileIntent.putExtras(bundle);
         startActivity(profileIntent);
@@ -94,7 +95,7 @@ public class HomepageActivity extends AppCompatActivity {
 
     public void createUserLayout(){
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        final String useremail = user.getEmail();
+        final String userEmail = user.getEmail();
         
         db.collection("users")
                 .get()
@@ -108,7 +109,7 @@ public class HomepageActivity extends AppCompatActivity {
                                 String email = document.get("email").toString();
 
 
-                                if(!email.equals(useremail)){
+                                if(!email.equals(userEmail)){
                                     final String fullName = document.get("first_name").toString() + " " +document.get("last_name").toString();
                                     final String homeCountry = document.get("country").toString();
                                     final String birthday = document.get("birthday").toString();
@@ -116,7 +117,7 @@ public class HomepageActivity extends AppCompatActivity {
 
                                     //find Layout
                                     LinearLayout all_buddies = (LinearLayout) findViewById(R.id.buddy_layout);
-                                    createUsersView(all_buddies, fullName, homeCountry, birthday, mothertongue);
+                                    createUsersView(all_buddies, email, fullName, homeCountry, birthday, mothertongue);
                                 }
 
 
@@ -129,7 +130,7 @@ public class HomepageActivity extends AppCompatActivity {
 
     }
 
-    public void createUsersView(LinearLayout baseLayout, final String fullName, final String homeCountry, final String birthday, final String mothertongue){
+    public void createUsersView(LinearLayout baseLayout, final String email, final String fullName, final String homeCountry, final String birthday, final String mothertongue){
         //create View for Each User
         LinearLayout linearLayout = new LinearLayout(getBaseContext());
         linearLayout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
@@ -161,7 +162,7 @@ public class HomepageActivity extends AppCompatActivity {
         showProfileTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showProfile(fullName, homeCountry, birthday, mothertongue, false);
+                showProfile(email, fullName, homeCountry, birthday, mothertongue, false);
             }
         });
         linearLayout.addView(showProfileTextView);
@@ -180,9 +181,9 @@ public class HomepageActivity extends AppCompatActivity {
 
     public void profile(View v){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String useremail = user.getEmail();
+        final String userEmail = user.getEmail();
 
-        final DocumentReference docRef = db.collection("users").document(useremail);
+        final DocumentReference docRef = db.collection("users").document(userEmail);
 
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -198,7 +199,7 @@ public class HomepageActivity extends AppCompatActivity {
 
                         Log.d(TAG, fullName + " " + homeCountry + " " + birthday);
 
-                        showProfile(fullName, homeCountry, birthday, mothertongue, true);
+                        showProfile(userEmail, fullName, homeCountry, birthday, mothertongue, true);
 
                     } else {
                         Log.d(TAG, "No such document");

@@ -72,7 +72,7 @@
                 android:textStyle="bold"/>
 
             <TextView
-                android:id="@+id/city"
+                android:id="@+id/country"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/no"
@@ -86,7 +86,7 @@
                 android:id="@+id/country_heading"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/city"
+                android:layout_below="@id/country"
                 android:text="@string/country"
                 android:textSize="16sp"
                 android:textColor="@color/blackColor"

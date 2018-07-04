@@ -114,7 +114,7 @@
                 android:inputType="textPassword" />
 
             <TextView
-                android:id="@+id/city"
+                android:id="@+id/country"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/country"
@@ -122,12 +122,12 @@
                 android:layout_below="@id/password_conf_Edit" />
 
             <AutoCompleteTextView
-                android:id="@+id/city_autocomplete"
+                android:id="@+id/country_autocomplete"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter your home country ..."
                 android:textSize="12sp"
-                android:layout_below="@id/city"/>
+                android:layout_below="@id/country"/>
 
             <TextView
                 android:id="@+id/language"
@@ -135,7 +135,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/lang_1"
                 android:textColor="@color/blackColor"
-                android:layout_below="@id/city_autocomplete" />
+                android:layout_below="@id/country_autocomplete" />
 
             <AutoCompleteTextView
                 android:id="@+id/language_autocomplete"
